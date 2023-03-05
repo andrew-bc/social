@@ -1,9 +1,7 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
+import s from "./Menu.module.css";
 
-import s from "./Nav.module.css";
-
-const Nav = () => {
+let Menu = () => {
   return (
     <nav className={s.nav}>
       <ul>
@@ -62,4 +60,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default Menu;

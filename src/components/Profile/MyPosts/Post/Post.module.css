@@ -5,12 +5,33 @@
 }
 .wall__avatar {
   margin: 0 15px 0 0;
+  align-self: flex-start;
 }
 
 .wall__avatar img {
-  border-radius: 15px;
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
 }
 .wall__message {
   color: #47525e;
   font-size: 26px;
+  line-height: 32px;
+}
+
+.wall__likes {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 75px;
+}
+
+.likes__img {
+  margin: 0 5px 0 0;
+}
+
+.likes__img img {
+  max-width: 20px;
+}
+
+.likes__count {
 }

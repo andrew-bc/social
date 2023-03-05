@@ -1,0 +1,21 @@
+.friendsItems {
+  flex: 1 1 33.333%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+}
+
+.friendsItems__avatar {
+  margin: 0 0 10px 0;
+}
+
+.friendsItems__avatar img {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+}
+
+.friendsItems__username {
+  text-align: center;
+}

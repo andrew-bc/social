@@ -1,5 +1,5 @@
 import "./App.css";
-import Nav from "./components/Nav/Nav";
+import Sidebar from "./components/Sidebar/Sidebar";
 import Profile from "./components/Profile/Profile";
 import Header from "./components/Header/Header";
 import Dialogs from "./components/Dialogs/Dialogs";
@@ -15,17 +15,21 @@ const App = (props) => {
         <Header />
         <div className="wrapper">
           <div className="main">
-            <Nav />
+            <Sidebar state={props.state.sidebar} />
             <Routes>
               <Route
                 path="/profile"
-                element={<Profile posts={props.posts} />}
+                element={
+                  <Profile
+                    state={props.state.profilePage}
+                    addPost={props.addPost}
+                    updateNewTextPost={props.updateNewTextPost}
+                  />
+                }
               />
               <Route
                 path="/dialogs*"
-                element={
-                  <Dialogs dialogs={props.dialogs} messages={props.messages} />
-                }
+                element={<Dialogs state={props.state.dialogsPage} />}
               />
               <Route path="/news" element={<News />} />
               <Route path="/music" element={<Music />} />

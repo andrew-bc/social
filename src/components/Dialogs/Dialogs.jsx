@@ -2,16 +2,15 @@ import s from "./Dialogs.module.css";
 
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
+import React from "react";
 
 const Dialogs = (props) => {
-  let dialogsElements = props.dialogs.map((d) => (
-    <DialogItem name={d.name} id={d.id} />
+  let dialogsElements = props.state.dialogs.map((d) => (
+    <DialogItem name={d.name} id={d.id} src={d.src} />
   ));
-
-  let messagesElements = props.messages.map((m) => (
-    <MessageItem id={m.id} name={m.name} message={m.message} />
+  let messagesElements = props.state.messages.map((m) => (
+    <MessageItem id={m.id} name={m.name} message={m.message} src={m.src} />
   ));
-
   return (
     <div className={s.content}>
       <div className={s.dialogs__title}>DIALOGS</div>

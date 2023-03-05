@@ -37,5 +37,6 @@
 }
 .bio__education {
 }
-.bio__sitename {
+.bio__sitename a {
+  font-size: 26px;
 }

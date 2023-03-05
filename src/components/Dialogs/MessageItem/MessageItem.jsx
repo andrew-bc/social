@@ -1,13 +1,11 @@
 import s from "./MessageItem.module.css";
 
-import user_wall from "./../../../img/user_wall.png";
-
 const MessageItem = (props) => {
   return (
     <div className={s.messages__item}>
       <div className={s.messages__info}>
         <div className={s.messages__avatar}>
-          <img src={user_wall} alt="" />
+          <img src={props.src} alt="" />
         </div>
         <div className={s.messages__usesrname}>{props.name}</div>
       </div>
