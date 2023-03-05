@@ -1,0 +1,41 @@
+.content__header {
+  background: url("./../../../img/content_header.png") 0 0 / cover no-repeat;
+  height: 250px;
+}
+.content__user {
+  display: flex;
+}
+.user__avatar {
+  margin: 0 30px 0 0;
+}
+
+.user__avatar img {
+  max-width: 200px;
+}
+
+.user__info {
+  margin: 30px 0 0 0;
+}
+.info__fullName {
+  color: #47525e;
+  font-size: 35px;
+  margin: 0 0 15px 0;
+}
+.info__bio {
+  color: #47525e;
+  font-size: 26px;
+  margin: 0 0 20px 0;
+}
+
+.info__bio div {
+  margin: 0 0 5px 0;
+}
+
+.bio__birthday {
+}
+.bio__city {
+}
+.bio__education {
+}
+.bio__sitename {
+}

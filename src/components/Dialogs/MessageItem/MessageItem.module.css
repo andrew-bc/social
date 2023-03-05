@@ -1,0 +1,29 @@
+.messages__item {
+  display: flex;
+  margin: 0 0 20px 0;
+}
+
+.messages__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px 0 0;
+}
+
+.messages__avatar {
+  margin: 0 0 10px 0;
+}
+
+.messages__usesrname {
+}
+
+.messages__text {
+  border: solid 1px rgb(182, 179, 179, 0.4);
+  border-radius: 15px;
+  padding: 15px;
+  line-height: 20px;
+  width: 70%;
+  -webkit-box-shadow: 11px 7px 14px -12px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 11px 7px 14px -12px rgba(66, 68, 90, 1);
+  box-shadow: 11px 7px 14px -12px rgba(66, 68, 90, 1);
+}

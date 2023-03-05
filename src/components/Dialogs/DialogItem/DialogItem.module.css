@@ -1,0 +1,11 @@
+.dialogs__item {
+  margin: 0 0 20px 0;
+}
+
+.dialogs__item a {
+  color: #8190a5;
+  font-size: 18px;
+}
+
+.dialogs__item a.active {
+}

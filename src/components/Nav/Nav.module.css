@@ -1,0 +1,22 @@
+.nav {
+  flex: 0 0 200px;
+  margin: 0 15px 0 0;
+}
+
+.item {
+  padding: 10px;
+}
+
+.item:last-child {
+  margin: 15px 0 0 0;
+}
+
+.item a {
+  color: #47525e;
+  font-size: 34px;
+  padding: 10px;
+}
+
+.item a.active {
+  color: #1d72ce;
+}

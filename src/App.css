@@ -99,138 +99,15 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
-.header {
-  background-color: #ffffff;
-  height: 70px;
-  margin: 0 0 15px 0;
-}
-
-.header .wrapper {
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-}
-.header__logo {
-  margin: 0 10px 0 0;
-}
-
-.header__title {
-  font-size: 20px;
-}
 
 .main {
   display: flex;
 }
-.nav {
-  flex: 0 0 200px;
-  margin: 0 15px 0 0;
-}
 
-.nav li {
-  padding: 10px;
-}
-
-.nav li:last-child {
-  margin: 15px 0 0 0;
-}
-
-.nav li a {
-  color: #47525e;
-  font-size: 34px;
-}
-
-.content {
+.app-wrapper-content {
   flex: 1 1 auto;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   padding: 20px;
-}
-
-.content__header {
-  background: url("./img/content_header.png") 0 0 / cover no-repeat;
-  height: 250px;
-}
-.content__user {
-  display: flex;
-}
-.user__avatar {
-  margin: 0 30px 0 0;
-}
-
-.user__avatar img {
-  max-width: 200px;
-}
-
-.user__info {
-  margin: 30px 0 0 0;
-}
-.info__fullName {
-  color: #47525e;
-  font-size: 35px;
-  margin: 0 0 15px 0;
-}
-.info__bio {
-  color: #47525e;
-  font-size: 26px;
-  margin: 0 0 20px 0;
-}
-
-.info__bio div {
-  margin: 0 0 5px 0;
-}
-
-.bio__birthday {
-}
-.bio__city {
-}
-.bio__education {
-}
-.bio__sitename {
-}
-.content__posts {
-}
-.posts__title {
-  color: #47525e;
-  font-size: 35px;
-  margin: 0 0 15px 0;
-}
-.posts__form {
-  display: flex;
-  flex-direction: column;
-  max-width: 80%;
-}
-
-.posts__form textarea {
-  background-color: #e6eeea;
-  font-size: 26px;
-  text-align: left;
-  padding: 15px;
-  margin: 0 0 20px 0;
-}
-
-.posts__form button {
-  background-color: #0cb658;
-  width: 162px;
-  height: 36px;
-  color: #ffffff;
-  font-size: 26px;
-  align-self: flex-end;
-}
-
-.content__wall {
-  display: flex;
-  flex-direction: column;
-}
-.wall__item {
-  display: flex;
-  align-items: center;
-  margin: 15px;
-}
-.wall__avatar {
-  margin: 0 15px 0 0;
-}
-.wall__message {
-  color: #47525e;
-  font-size: 26px;
 }

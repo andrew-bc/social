@@ -1,0 +1,16 @@
+.wall__item {
+  display: flex;
+  align-items: center;
+  margin: 15px;
+}
+.wall__avatar {
+  margin: 0 15px 0 0;
+}
+
+.wall__avatar img {
+  border-radius: 15px;
+}
+.wall__message {
+  color: #47525e;
+  font-size: 26px;
+}

@@ -1,0 +1,28 @@
+.content {
+  flex: 1 1 auto;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.dialogs__title {
+  color: #47525e;
+  font-size: 26px;
+  margin: 0 0 20px 0;
+}
+
+.dialogs__wrapper {
+  display: flex;
+  height: 100%;
+}
+
+.dialogs {
+  flex: 0 0 200px;
+  border-right: 2px solid rgb(182, 179, 179, 0.4);
+}
+
+.messages {
+  flex: 1 1 auto;
+  margin: 0 0 0 20px;
+}
