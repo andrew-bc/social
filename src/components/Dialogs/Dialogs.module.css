@@ -22,7 +22,15 @@
   border-right: 2px solid rgb(182, 179, 179, 0.4);
 }
 
+.dialogs__chat {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
 .messages {
   flex: 1 1 auto;
   margin: 0 0 0 20px;
+  height: 70vh;
+  overflow: auto;
 }

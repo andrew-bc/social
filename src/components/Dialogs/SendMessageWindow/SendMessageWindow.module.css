@@ -1,0 +1,20 @@
+.messageWindow {
+  border-top: 2px solid rgb(182, 179, 179, 0.4);
+  padding: 15px;
+}
+
+.messageInput {
+  padding: 10px 8px 10px 15px;
+  font-size: 16px;
+  border-width: 1px;
+  border-color: #cccccc;
+  background-color: #ffffff;
+  color: #000000;
+  border-style: solid;
+  border-radius: 15px;
+  min-width: 100%;
+}
+
+.css-messageInput:focus {
+  outline: none;
+}
