@@ -11,11 +11,16 @@ const MyPosts = (props) => {
 
   let sendPostToState = () => {
     let text = messageText.current.value;
-    props.addPost(text);
+    //props.addPost(text);
+    props.dispatch({ type: "ADD-POST", message: text });
   };
 
   let updatePost = () => {
-    props.updateNewTextPost(messageText.current.value);
+    //props.updateNewTextPost(messageText.current.value);
+    props.dispatch({
+      type: "UPDATE-NEW-TEXT-POST",
+      newText: messageText.current.value,
+    });
   };
 
   return (

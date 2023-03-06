@@ -39,24 +39,25 @@ let store = {
   getState() {
     return this._state;
   },
-  addPost(message) {
-    let newPost = {
-      id: 1,
-      message: message,
-      src: "img/avatar.jpg",
-      likesCount: 0,
-    };
-    this._state.profilePage.posts.push(newPost);
-    this.updateNewTextPost("");
-    this._erenderAllTree(this._state);
-  },
-  updateNewTextPost(newText) {
-    this._state.profilePage.newText = newText;
-    this._rerenderAllTree(this._state);
-  },
-  _rerenderAllTree(state) {},
   subscribe(observer) {
     this._rerenderAllTree = observer;
+  },
+  _rerenderAllTree(state) {},
+  dispatch(action) {
+    if (action.type === "ADD-POST") {
+      let newPost = {
+        id: 1,
+        message: action.message,
+        src: "img/avatar.jpg",
+        likesCount: 0,
+      };
+      this._state.profilePage.posts.push(newPost);
+      this._state.profilePage.newText = "";
+      this._rerenderAllTree(this._state);
+    } else if (action.type === "UPDATE-NEW-TEXT-POST") {
+      this._state.profilePage.newText = action.newText;
+      this._rerenderAllTree(this._state);
+    }
   },
 };
 
