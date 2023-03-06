@@ -1,4 +1,8 @@
-import { rerenderAllTree } from "./../render";
+let rerenderAllTree = (state) => {};
+
+export let subscribe = (observer) => {
+  rerenderAllTree = observer;
+};
 
 let state = {
   profilePage: {
