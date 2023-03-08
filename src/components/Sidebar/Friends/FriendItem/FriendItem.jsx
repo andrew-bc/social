@@ -2,6 +2,7 @@ import s from "./FriendItem.module.css";
 import { NavLink } from "react-router-dom";
 
 let FriendItem = (props) => {
+  debugger;
   return (
     <NavLink to="#" className={s.friendsItems}>
       <div className={s.friendsItems__avatar}>

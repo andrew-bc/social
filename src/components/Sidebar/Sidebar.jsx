@@ -4,12 +4,11 @@ import Menu from "./Menu/Menu";
 
 import s from "./Sidebar.module.css";
 
-const Sidebar = (props) => {
-  let state = props.store.getState();
+const Sidebar = () => {
   return (
     <div className={s.sidebar}>
       <Menu />
-      <Friends state={state} />
+      <Friends />
     </div>
   );
 };
