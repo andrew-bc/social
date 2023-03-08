@@ -1,6 +1,6 @@
 import s from "./SendMessageWindow.module.css";
 
-import { sendMessageActionCreator, updateNewMessageActionCreator } from "./../../../redux/state";
+import { sendMessageActionCreator, updateNewMessageActionCreator } from "./../../../redux/dialogsReducer";
 import React from "react";
 
 const SendMessageWindow = (props) => {
