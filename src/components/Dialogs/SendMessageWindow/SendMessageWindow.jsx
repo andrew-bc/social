@@ -1,6 +1,5 @@
 import s from "./SendMessageWindow.module.css";
 
-import { sendMessageActionCreator, updateNewMessageActionCreator } from "./../../../redux/dialogsReducer";
 import React from "react";
 
 const SendMessageWindow = (props) => {
@@ -8,14 +7,14 @@ const SendMessageWindow = (props) => {
 
   let updateNewMessage = () => {
     let message = inputWithMessage.current.value;
-    props.dispatch(updateNewMessageActionCreator(message));
+    props.updateNewMessage(message);
   };
 
   let sendMessage = (event) => {
     let message = inputWithMessage.current.value;
     event.persist();
     if (event.key === "Enter" && message) {
-      props.dispatch(sendMessageActionCreator(message));
+      props.sendMessage(message);
     }
   };
 

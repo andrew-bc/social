@@ -1,8 +1,6 @@
 import s from "./Post.module.css";
 import likeImage from "./../../img/like.png";
 
-import user_wall from "./../../../../img/user_wall.png";
-
 const Post = (props) => {
   return (
     <div>
@@ -14,7 +12,7 @@ const Post = (props) => {
       </div>
       <div className={s.wall__likes}>
         <div className={s.likes__img}>
-          <img src={likeImage} />
+          <img src={likeImage} alt="likes" />
         </div>
         <div className={s.likes__count}>{props.likesCount}</div>
       </div>

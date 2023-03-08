@@ -2,7 +2,7 @@ import s from "./Friends.module.css";
 import FriendItem from "./FriendItem/FriendItem";
 
 let Friends = (props) => {
-  let firendsElements = props.state.friends.map((f) => (
+  let firendsElements = props.state.sidebar.friends.map((f) => (
     <FriendItem id={f.id} key={f} name={f.name} src={f.src} />
   ));
 

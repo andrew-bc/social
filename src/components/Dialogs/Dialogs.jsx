@@ -4,10 +4,12 @@ import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
 import SendMessageWindow from "./SendMessageWindow/SendMessageWindow";
 import React from "react";
+import SendMessageWindowContainer from "./SendMessageWindow/SendMessageWindowContainer";
 
 const Dialogs = (props) => {
-  let dialogsElements = props.state.dialogs.map((d) => <DialogItem name={d.name} id={d.id} src={d.src} />);
-  let messagesElements = props.state.messages.map((m) => (
+  let state = props.store.getState();
+  let dialogsElements = state.dialogsPage.dialogs.map((d) => <DialogItem name={d.name} id={d.id} src={d.src} />);
+  let messagesElements = state.dialogsPage.messages.map((m) => (
     <MessageItem id={m.id} name={m.name} message={m.message} src={m.src} />
   ));
 
@@ -18,7 +20,7 @@ const Dialogs = (props) => {
         <div className={s.dialogs}>{dialogsElements}</div>
         <div className={s.dialogs__chat}>
           <div className={s.messages}>{messagesElements}</div>
-          <SendMessageWindow newMessage={props.state.newMessage} dispatch={props.dispatch} />
+          <SendMessageWindowContainer store={props.store} />
         </div>
       </div>
     </div>
