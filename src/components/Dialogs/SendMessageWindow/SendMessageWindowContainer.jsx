@@ -1,31 +1,24 @@
 import { sendMessageActionCreator, updateNewMessageActionCreator } from "../../../redux/dialogsReducer";
-import React from "react";
 import SendMessageWindow from "./SendMessageWindow";
-import StoreContext from "../../../StoreContext";
+import { connect } from "react-redux";
 
-const SendMessageWindowContainer = () => {
-  return (
-    <StoreContext.Consumer>
-      {(store) => {
-        let state = store.getState();
-        let updateNewMessage = (message) => {
-          store.dispatch(updateNewMessageActionCreator(message));
-        };
-
-        let sendMessage = (message) => {
-          store.dispatch(sendMessageActionCreator(message));
-        };
-
-        return (
-          <SendMessageWindow
-            sendMessage={sendMessage}
-            updateNewMessage={updateNewMessage}
-            newMessage={state.dialogsPage.newMessage}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  );
+const mapStateToProps = (state) => {
+  return {
+    newMessage: state.dialogsPage.newMessage,
+  };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    sendMessage: (message) => {
+      dispatch(sendMessageActionCreator(message));
+    },
+    updateNewMessage: (message) => {
+      dispatch(updateNewMessageActionCreator(message));
+    },
+  };
+};
+
+const SendMessageWindowContainer = connect(mapStateToProps, mapDispatchToProps)(SendMessageWindow);
 
 export default SendMessageWindowContainer;
