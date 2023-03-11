@@ -6,9 +6,11 @@ import React from "react";
 import SendMessageWindowContainer from "./SendMessageWindow/SendMessageWindowContainer";
 
 const Dialogs = (props) => {
-  let dialogsElements = props.dialogsPage.dialogs.map((d) => <DialogItem name={d.name} id={d.id} src={d.src} />);
+  let dialogsElements = props.dialogsPage.dialogs.map((d) => (
+    <DialogItem name={d.name} id={d.id} key={d.id} src={d.src} />
+  ));
   let messagesElements = props.dialogsPage.messages.map((m) => (
-    <MessageItem id={m.id} name={m.name} message={m.message} src={m.src} />
+    <MessageItem id={m.id} key={m.id} name={m.name} message={m.message} src={m.src} />
   ));
   return (
     <div className={s.content}>

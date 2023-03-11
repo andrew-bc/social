@@ -11,7 +11,7 @@ let initialState = {
     { id: 1, name: "Władek", message: "Great!", src: "img/user_wall.png" },
     { id: 2, name: "Me", message: "Fine! And you?", src: "img/avatar.jpg" },
     {
-      id: 2,
+      id: 3,
       name: "Władek",
       message: "Hello! How are you?",
       src: "img/user_wall.png",
@@ -21,24 +21,28 @@ let initialState = {
 };
 
 let dialogsReducer = (state = initialState, action) => {
+  let copyState;
   switch (action.type) {
     case SEND_MESSAGE: {
-      let copyState = { ...state };
-      copyState.messages = [...state.messages];
-      let newMessage = {
-        id: 1,
-        name: "Me",
-        message: action.message,
-        src: "img/avatar.jpg",
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          {
+            id: 4,
+            name: "Me",
+            message: action.message,
+            src: "img/avatar.jpg",
+          },
+        ],
+        newMessage: "",
       };
-      copyState.messages.push(newMessage);
-      copyState.newMessage = "";
-      return copyState;
     }
     case UPDATE_NEW_MESSAGE: {
-      let copyState = { ...state };
-      copyState.newMessage = action.newMessage;
-      return copyState;
+      return {
+        ...state,
+        newMessage: action.newMessage,
+      };
     }
     default:
       return state;
