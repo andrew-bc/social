@@ -3,6 +3,7 @@ import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
 const MyPosts = (props) => {
+  debugger;
   let postsElements = props.posts.map((p) => (
     <Post id={p.id} key={p.id} message={p.message} src={p.src} likesCount={p.likesCount} />
   ));
