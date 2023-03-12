@@ -22,7 +22,7 @@
 .posts__form button {
   background-color: #0cb658;
   width: 162px;
-  height: 36px;
+  padding: 10px;
   color: #ffffff;
   font-size: 26px;
   align-self: flex-end;

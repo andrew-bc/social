@@ -1,6 +1,7 @@
 .userItem {
   display: flex;
-  margin: 15px;
+  padding: 15px;
+  border-bottom: 2px solid rgb(182, 179, 179, 0.4);
 }
 .avatar {
   display: flex;
@@ -31,6 +32,7 @@
 .info__status {
   background: url("img/status_icon.png") 0 3px/20px 20px no-repeat;
   padding: 5px 0 5px 25px;
+  min-height: 25px;
 }
 
 .info__location {
@@ -51,10 +53,17 @@
 }
 
 .but button {
-  background-color: #0cb658;
   width: 162px;
-  height: 36px;
   color: #ffffff;
   font-size: 26px;
   align-self: flex-end;
+  padding: 10px;
+}
+
+.info__follow {
+  background-color: #0cb658;
+}
+
+.info__unfollow {
+  background-color: #ff0000;
 }
