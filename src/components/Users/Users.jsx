@@ -1,52 +1,25 @@
 import React from "react";
-import s from "./Users.module.css";
-import UserItem from "./UserItem/UserItem";
-import axios from "axios";
-import ReactDOM from "react-dom";
 import ReactPaginate from "react-paginate";
+import UserItem from "./UserItem/UserItem";
 
-class Users extends React.Component {
-  componentDidMount() {
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`
-      )
-      .then((response) => {
-        this.props.setUsers(response.data.items);
-        this.props.setTotalCount(response.data.totalCount);
-      });
-  }
+import s from "./Users.module.css";
 
-  getUsersElements = () => {
-    return this.props.users.map((user) => (
-      <UserItem userInfo={user} follow={this.props.follow} unfollow={this.props.unfollow}></UserItem>
+const Users = (props) => {
+  const getUsersElements = () => {
+    return props.users.map((user) => (
+      <UserItem userInfo={user} key={user.id} follow={props.follow} unfollow={props.unfollow}></UserItem>
     ));
   };
 
-  getPaginationElements = () => {
-    // let result = [];
-    // for (let i = 1; i <= Math.ceil(this.props.totalCount / this.props.pageSize); i++) {
-    //   result.push(
-    //     <li
-    //       key={i}
-    //       className={this.props.currentPage === i ? s.currentPage : ""}
-    //       onClick={() => {
-    //         this.onChangedPageNumber(i);
-    //       }}
-    //     >
-    //       {i}
-    //     </li>
-    //   );
-    // }
+  const getPaginationElements = () => {
     return (
       <div>
-        {/* {result} */}
         <ReactPaginate
           nextLabel="next >"
-          onPageChange={this.onChangedPageNumber}
+          onPageChange={props.onChangedPageNumber}
           pageRangeDisplayed={3}
           marginPagesDisplayed={2}
-          pageCount={Math.ceil(this.props.totalCount / this.props.pageSize)}
+          pageCount={Math.ceil(props.totalCount / props.pageSize)}
           previousLabel="< previous"
           pageClassName={s.page__item}
           pageLinkClassName={s.page__link}
@@ -60,40 +33,19 @@ class Users extends React.Component {
           containerClassName={s.pagination}
           activeClassName={s.currentPage}
           renderOnZeroPageCount={null}
-          forcePage={this.props.currentPage - 1}
+          forcePage={props.currentPage - 1}
         />
       </div>
     );
   };
 
-  // onChangedPageNumber = (pageNumber) => {
-  //   this.props.setCurrentPage(pageNumber);
-  //   axios
-  //     .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`)
-  //     .then((response) => {
-  //       this.props.setUsers(response.data.items);
-  //     });
-  // };
-
-  onChangedPageNumber = (pageNumber) => {
-    let newPageNumber = pageNumber.selected + 1;
-    this.props.setCurrentPage(newPageNumber);
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${newPageNumber}`)
-      .then((response) => {
-        this.props.setUsers(response.data.items);
-      });
-  };
-
-  render() {
-    return (
-      <div className={s.content}>
-        <ul className={s.pagination}>{this.getPaginationElements()}</ul>
-        <div className={s.users}>{this.getUsersElements()}</div>
-        <ul className={s.pagination}>{this.getPaginationElements()}</ul>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={s.content}>
+      <ul className={s.pagination}>{getPaginationElements()}</ul>
+      <div className={s.users}>{getUsersElements()}</div>
+      <ul className={s.pagination}>{getPaginationElements()}</ul>
+    </div>
+  );
+};
 
 export default Users;
