@@ -9,8 +9,8 @@ const ProfileInfo = (props) => {
     for (let key in data) {
       if (data[key]) {
         result.push(
-          <div className={s.bio__socialLink}>
-            <a href={normalizeUrl(data[key])} target="_blank" rel="noreferrer">
+          <div key={key} className={s.bio__socialLink}>
+            <a key={key} href={normalizeUrl(data[key])} target="_blank" rel="noreferrer">
               <img key={key} title={key} alt={key} src={require(`./../../../img/social/${key}.png`)} width="25" />
             </a>
           </div>

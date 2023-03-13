@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import s from "./UserItem.module.css";
 import noAvatarImage from "../../../img/user_wall.png";
+import { followAPI } from "../../../api/api";
 
 const UserItem = (props) => {
   return (
@@ -15,10 +16,6 @@ const UserItem = (props) => {
         <div className={s.info__name}>
           <Link to={"/profile/" + props.userInfo.id}>{props.userInfo.name}</Link>
         </div>
-        {/* <div className={s.info__location}>
-          <span className={s.info__city}>"props.userInfo.location.city, "</span>
-          <span className={s.info__country}>"props.userInfo.location.country"</span>
-        </div> */}
         {props.userInfo.status ? <div className={s.info__status}>{props.userInfo.status}</div> : ""}
       </div>
       <div className={s.but}>
@@ -26,7 +23,11 @@ const UserItem = (props) => {
           <button
             className={s.info__unfollow}
             onClick={() => {
-              props.unfollow(props.userInfo.id);
+              followAPI.unfollow(props.userInfo.id).then((data) => {
+                if (data.resultCode === 0) {
+                  props.unfollow(props.userInfo.id);
+                }
+              });
             }}
           >
             Unfollow
@@ -35,7 +36,11 @@ const UserItem = (props) => {
           <button
             className={s.info__follow}
             onClick={() => {
-              props.follow(props.userInfo.id);
+              followAPI.follow(props.userInfo.id).then((data) => {
+                if (data.resultCode === 0) {
+                  props.follow(props.userInfo.id);
+                }
+              });
             }}
           >
             Follow
