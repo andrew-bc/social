@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import s from "./UserItem.module.css";
 import noAvatarImage from "../../../img/user_wall.png";
-import { followAPI } from "../../../api/api";
 
 const UserItem = (props) => {
   return (
@@ -21,26 +20,20 @@ const UserItem = (props) => {
       <div className={s.but}>
         {props.userInfo.followed ? (
           <button
+            disabled={props.followingInprogress.includes(props.userInfo.id)}
             className={s.info__unfollow}
             onClick={() => {
-              followAPI.unfollow(props.userInfo.id).then((data) => {
-                if (data.resultCode === 0) {
-                  props.unfollow(props.userInfo.id);
-                }
-              });
+              props.unfollow(props.userInfo.id);
             }}
           >
             Unfollow
           </button>
         ) : (
           <button
+            disabled={props.followingInprogress.includes(props.userInfo.id)}
             className={s.info__follow}
             onClick={() => {
-              followAPI.follow(props.userInfo.id).then((data) => {
-                if (data.resultCode === 0) {
-                  props.follow(props.userInfo.id);
-                }
-              });
+              props.follow(props.userInfo.id);
             }}
           >
             Follow

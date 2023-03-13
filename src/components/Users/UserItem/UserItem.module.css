@@ -60,6 +60,9 @@
   padding: 10px;
 }
 
+.but button:disabled {
+  background-color: grey;
+}
 .info__follow {
   background-color: #0cb658;
 }

@@ -7,7 +7,14 @@ import s from "./Users.module.css";
 const Users = (props) => {
   const getUsersElements = () => {
     return props.users.map((user) => (
-      <UserItem userInfo={user} key={user.id} follow={props.follow} unfollow={props.unfollow}></UserItem>
+      <UserItem
+        userInfo={user}
+        key={user.id}
+        follow={props.follow}
+        unfollow={props.unfollow}
+        followingInprogress={props.followingInprogress}
+        setIsFollowinfInProgress={props.setIsFollowinfInProgress}
+      ></UserItem>
     ));
   };
 

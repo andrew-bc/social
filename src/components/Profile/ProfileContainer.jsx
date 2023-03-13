@@ -3,8 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import s from "./Profile.module.css";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { setProfile } from "./../../redux/profileReducer";
-import { profileAPI } from "../../api/api";
+import { getProfile } from "./../../redux/profileReducer";
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -19,9 +18,7 @@ function withRouter(Component) {
 
 class ProfileContainer extends React.Component {
   renderProfile(userId) {
-    profileAPI.getProfileByUserId(userId).then((data) => {
-      this.props.setProfile(data);
-    });
+    this.props.getProfile(userId);
   }
 
   componentDidMount() {
@@ -56,4 +53,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setProfile })(withRouter(ProfileContainer));
+export default connect(mapStateToProps, { getProfile })(withRouter(ProfileContainer));
