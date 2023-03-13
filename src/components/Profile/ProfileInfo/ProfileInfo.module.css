@@ -11,7 +11,7 @@
 }
 
 .user__avatar img {
-  width: 200px;
+  /* width: 200px; */
 }
 
 .user__info {
@@ -31,42 +31,17 @@
   gap: 10px;
 }
 
-.bio__birthday {
-}
-.bio__city {
-}
-.bio__education {
-}
 .bio__lookingForAJob {
 }
 .bio__lookingForAJobDescription {
 }
-.bio__contacts__mainLink a {
-  font-size: 26px;
+.bio__socialLinks {
+  display: flex;
+  align-items: center;
 }
 
-.bio__contacts__facebook {
-}
-
-.bio__contacts__website {
-}
-
-.bio__contacts__vk {
-}
-
-.bio__contacts__twitter {
-}
-
-.bio__contacts__instagram {
-}
-
-.bio__contacts__youtube {
-}
-
-.bio__contacts__github {
-}
-
-.bio__contacts__mainLink {
+.bio__socialLink {
+  padding: 5px;
 }
 
 .bio__aboutMe {

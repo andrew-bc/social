@@ -1,7 +1,6 @@
 import s from "./Profile.module.css";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import Preload from "../Users/Preload/Preload";
 
 const Profile = (props) => {
   return (
