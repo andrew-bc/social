@@ -7,13 +7,13 @@ const UserItem = (props) => {
   return (
     <div className={s.userItem}>
       <div className={s.avatar}>
-        <Link to="#">
+        <Link to={"/profile/" + props.userInfo.id}>
           <img src={props.userInfo.photos.large ? props.userInfo.photos.large : noAvatarImage} alt="avatar" />
         </Link>
       </div>
       <div className={s.info}>
         <div className={s.info__name}>
-          <Link to="#">{props.userInfo.name}</Link>
+          <Link to={"/profile/" + props.userInfo.id}>{props.userInfo.name}</Link>
         </div>
         {/* <div className={s.info__location}>
           <span className={s.info__city}>"props.userInfo.location.city, "</span>

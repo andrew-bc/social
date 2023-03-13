@@ -21,7 +21,6 @@ let initialState = {
 };
 
 let dialogsReducer = (state = initialState, action) => {
-  let copyState;
   switch (action.type) {
     case SEND_MESSAGE: {
       return {
@@ -51,5 +50,5 @@ let dialogsReducer = (state = initialState, action) => {
 
 export default dialogsReducer;
 
-export const sendMessageActionCreator = (text) => ({ type: SEND_MESSAGE, message: text });
-export const updateNewMessageActionCreator = (text) => ({ type: UPDATE_NEW_MESSAGE, newMessage: text });
+export const sendMessage = (text) => ({ type: SEND_MESSAGE, message: text });
+export const updateNewMessage = (text) => ({ type: UPDATE_NEW_MESSAGE, newMessage: text });
