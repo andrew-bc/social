@@ -4,6 +4,7 @@ import s from "./Profile.module.css";
 import Profile from "./Profile";
 import { connect } from "react-redux";
 import { getProfile } from "./../../redux/profileReducer";
+import { compose } from "redux";
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -53,4 +54,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getProfile })(withRouter(ProfileContainer));
+export default compose(connect(mapStateToProps, { getProfile }), withRouter)(ProfileContainer);
