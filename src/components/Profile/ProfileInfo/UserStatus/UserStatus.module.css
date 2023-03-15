@@ -1,0 +1,24 @@
+.status__span_my {
+  cursor: pointer;
+}
+
+.status__span {
+}
+
+.status__span_my:hover {
+  background-color: rgb(241, 241, 241);
+}
+
+.status__span_nostatus {
+  cursor: pointer;
+  font-style: italic;
+}
+
+.status__span_nostatus:hover {
+  background-color: rgb(241, 241, 241);
+}
+
+.status__input {
+  color: #47525e;
+  font-size: 26px;
+}

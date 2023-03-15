@@ -2,6 +2,7 @@ import s from "./ProfileInfo.module.css";
 import noAvatar from "./../../../img/noAvatar.svg";
 import Preload from "./../../Users/Preload/Preload";
 import normalizeUrl from "normalize-url";
+import UserStatus from "./UserStatus/UserStatus";
 
 const ProfileInfo = (props) => {
   const socialLinksElements = (data) => {
@@ -33,6 +34,14 @@ const ProfileInfo = (props) => {
         <div className={s.user__info}>
           <div className={s.info__fullName}>{props.profile.fullName}</div>
           <div className={s.info__bio}>
+            <div className={s.bio__status}>
+              <UserStatus
+                status={props.profile.status}
+                setStatus={props.setStatus}
+                userId={props.profile.userId}
+                myId={props.myId}
+              />
+            </div>
             <div className={s.bio__socialLinks}>{socialLinksElements(props.profile.contacts)}</div>
             {props.profile.aboutMe ? <div className={s.bio__aboutMe}>About me: {props.profile.aboutMe}</div> : ""}
             <div className={s.bio__lookingForAJob}>{props.profile.lookingForAJob ? "Yes" : "No"}</div>
