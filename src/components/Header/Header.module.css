@@ -31,4 +31,11 @@
 }
 
 .header__login {
+  display: flex;
+  align-items: center;
+}
+
+.header__login button {
+  max-width: 60px;
+  font-size: 10px;
 }

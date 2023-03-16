@@ -18,7 +18,16 @@ const Header = (props) => {
         </div>
         <div className={s.header__right}>
           <div className={s.header__login}>
-            {props.auth.isAuth === true ? `Hello, ${props.auth.login}` : <Link to="/login">Please login...</Link>}
+            {props.auth.isAuth === true ? (
+              <>
+                <div>Hello, {props.auth.login}</div>
+                <div>
+                  <button onClick={props.logoutUserFromSite}>Log out</button>
+                </div>
+              </>
+            ) : (
+              <Link to="/login">Please login...</Link>
+            )}
           </div>
         </div>
       </div>

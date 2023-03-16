@@ -4,12 +4,11 @@ import s from "./UserStatus.module.css";
 class UserStatus extends React.Component {
   state = {
     editMode: false,
+    status: this.props.status,
   };
 
   handleFocus = (event) => event.target.select();
-  changeStatus = (event) => this.props.setStatus(event.target.value, true);
-
-  isThisMyProfile = +this.props.userId === +this.props.myId;
+  changeStatus = (event) => this.setState({ status: event.target.value });
 
   activateEditMode = () => {
     this.setState({ editMode: true });
@@ -17,16 +16,14 @@ class UserStatus extends React.Component {
 
   deactivateEditMode = (event) => {
     this.setState({ editMode: false });
-    this.props.setStatus(event.target.value, false);
+    this.props.setStatus(this.state.status);
   };
 
-  componentDidUpdate() {
-    this.isThisMyProfile = +this.props.userId === +this.props.myId;
-  }
+  componentDidUpdate() {}
 
   render() {
     if (!this.state.editMode) {
-      if (this.isThisMyProfile) {
+      if (this.props.myId === this.props.userId) {
         if (this.props.status) {
           return (
             <span className={s.status__span_my} onClick={this.activateEditMode}>
@@ -51,7 +48,7 @@ class UserStatus extends React.Component {
             onBlur={this.deactivateEditMode}
             onFocus={this.handleFocus}
             autoFocus
-            value={this.props.status}
+            value={this.state.status}
             onChange={this.changeStatus}
           />
         </>

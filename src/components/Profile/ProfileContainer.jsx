@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import s from "./Profile.module.css";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { getProfile, getStatus, setStatus } from "./../../redux/profileReducer";
+import { getProfile, setStatus } from "./../../redux/profileReducer";
 import { compose } from "redux";
 
 function withRouter(Component) {
@@ -54,4 +54,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(connect(mapStateToProps, { getProfile, getStatus, setStatus }), withRouter)(ProfileContainer);
+export default compose(connect(mapStateToProps, { getProfile, setStatus }), withRouter)(ProfileContainer);

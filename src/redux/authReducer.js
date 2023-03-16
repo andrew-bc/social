@@ -12,7 +12,7 @@ let initialState = {
 let authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_AUTH_DATA: {
-      return { ...state, ...action.data, isAuth: true };
+      return { id: action.id, email: action.email, login: action.login, isAuth: action.isAuth };
     }
     default:
       return state;
@@ -21,14 +21,39 @@ let authReducer = (state = initialState, action) => {
 
 export default authReducer;
 
-export const setAuthData = (data) => ({ type: SET_AUTH_DATA, data });
+export const setAuthData = (id, email, login, isAuth) => ({ type: SET_AUTH_DATA, id, email, login, isAuth });
 
 export const getAutharization = () => {
   return (dispatch) => {
     authAPI.getAutharization().then((data) => {
       if (data.resultCode === 0) {
         let { id, email, login } = data.data;
-        dispatch(setAuthData({ id, email, login }));
+        dispatch(setAuthData(id, email, login, true));
+      }
+    });
+  };
+};
+
+export const loginUserOnSite = ({ email, password, rememberMe }) => {
+  return (dispatch) => {
+    authAPI.login({ email, password, rememberMe }).then((data) => {
+      if (data.resultCode === 0) {
+        console.log("LOGIN: OK");
+        dispatch(getAutharization());
+      } else if (data.resultCode === 1) {
+        console.log("LOGIN: request is invalid");
+      } else if (data.resultCode === 10) {
+        console.log("LOGIN: please captcha");
+      }
+    });
+  };
+};
+
+export const logoutUserFromSite = () => {
+  return (dispatch) => {
+    authAPI.logout().then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(setAuthData(null, null, null, false));
       }
     });
   };
