@@ -3,7 +3,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import { BrowserRouter, Routes, Route, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate, useParams } from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -40,13 +40,14 @@ const App = (props) => {
         <div className="main">
           <Sidebar />
           <Routes>
-            <Route path="/" element={<ProfileContainer isMain={true} />} />
-            <Route path="/profile" element={<ProfileContainer isMain={true} />} />
+            <Route path="/" element={<ProfileContainer />} />
+            <Route path="/profile" element={<ProfileContainer />} />
             <Route path="/profile/:userId" element={<ProfileContainer />} />
             <Route path="/dialogs/*" element={<DialogsContainer />} />
             <Route path="/news" element={<News />} />
             <Route path="/music" element={<Music />} />
-            <Route path="/users" element={<UsersContainer />} />
+            <Route path="/users" element={<UsersContainer totalCount={props.totalCount} />} />
+            <Route path="/users/:page" element={<UsersContainer />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/login" element={<LoginContainer />} />
           </Routes>
@@ -59,6 +60,7 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   return {
     initialized: state.app.initialized,
+    totalCount: state.users.totalCount,
   };
 };
 

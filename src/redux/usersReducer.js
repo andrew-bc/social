@@ -5,6 +5,7 @@ const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_COUNT = "SET_TOTAL_COUNT";
+const GET_TOTAL_COUNT = "GET_TOTAL_COUNT";
 const SET_IS_FETCHING = "SET_IS_FETCHING";
 const SET_IS_FOLLOWING_IN_PROGRESS = "SET_IS_FOLLOWING_IN_PROGRESS";
 
@@ -81,6 +82,13 @@ export const setIsFollowinfInProgress = (userId, isFetching) => ({
   isFetching,
 });
 
+export const getTotalCount = () => {
+  return (dispatch) => {
+    usersAPI.getTotalCount().then((totalCount) => {
+      dispatch(setTotalCount(totalCount));
+    });
+  };
+};
 export const getUsers = (pageSize, currentPage) => {
   return (dispatch) => {
     dispatch(setIsFetching(true));

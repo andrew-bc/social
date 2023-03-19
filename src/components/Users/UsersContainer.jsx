@@ -2,20 +2,35 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Users from "./Users";
 import Preload from "../Preload/Preload";
-import { follow, unfollow, setCurrentPage, setIsFollowinfInProgress, getUsers } from "./../../redux/usersReducer";
+import {
+  follow,
+  unfollow,
+  setCurrentPage,
+  setIsFollowinfInProgress,
+  getUsers,
+  getTotalCount,
+} from "./../../redux/usersReducer";
 
 import s from "./UsersContainer.module.css";
 import { compose } from "redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UsersContainer = (props) => {
+  let pageFromParams = useParams().page;
+  let navigate = useNavigate();
+
   useEffect(() => {
+    if (pageFromParams && pageFromParams >= 1 && pageFromParams <= Math.ceil(props.totalCount / props.pageSize)) {
+      props.setCurrentPage(pageFromParams);
+    }
     props.getUsers(props.pageSize, props.currentPage);
-  }, [props.pageSize, props.currentPage]);
+  }, [props.totalCount, props.pageSize, pageFromParams, props.currentPage]);
 
   const onChangedPageNumber = (pageNumber) => {
     let newPageNumber = pageNumber.selected + 1;
     props.setCurrentPage(newPageNumber);
     props.getUsers(props.pageSize, newPageNumber);
+    navigate(`/users/${newPageNumber}`);
   };
 
   return (
@@ -57,5 +72,6 @@ export default compose(
     setCurrentPage,
     setIsFollowinfInProgress,
     getUsers,
+    getTotalCount,
   })
 )(UsersContainer);

@@ -1,4 +1,5 @@
 import { getAutharization } from "./authReducer";
+import { getTotalCount } from "./usersReducer";
 
 const INIT_APP = "INIT_APP";
 
@@ -20,7 +21,9 @@ export const initializedSuccess = () => ({ type: INIT_APP });
 
 export const initApp = () => {
   return (dispatch) => {
-    dispatch(getAutharization()).then(() => {
+    const a = dispatch(getAutharization());
+    const b = dispatch(getTotalCount());
+    Promise.all([a, b]).then((aa, bb) => {
       dispatch(initializedSuccess());
     });
   };

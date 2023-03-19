@@ -12,6 +12,9 @@ export const usersAPI = {
   getUsers(pageSize, currentPage) {
     return instance.get(`users?count=${pageSize}&page=${currentPage}`).then((response) => response.data);
   },
+  getTotalCount() {
+    return instance.get(`users?count=1&page=1`).then((response) => response.data.totalCount);
+  },
   follow(id) {
     return instance.post(`follow/${id}`).then((response) => response.data);
   },
