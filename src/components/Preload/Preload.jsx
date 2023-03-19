@@ -1,5 +1,5 @@
 import React from "react";
-import preloadImage from "./../../../img/preload.svg";
+import preloadImage from "./../../img/preload.svg";
 
 const Preload = () => {
   return (

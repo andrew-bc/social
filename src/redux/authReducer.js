@@ -25,7 +25,7 @@ export const setAuthData = (id, email, login, isAuth) => ({ type: SET_AUTH_DATA,
 
 export const getAutharization = () => {
   return (dispatch) => {
-    authAPI.getAutharization().then((data) => {
+    return authAPI.getAutharization().then((data) => {
       if (data.resultCode === 0) {
         let { id, email, login } = data.data;
         dispatch(setAuthData(id, email, login, true));
@@ -34,17 +34,15 @@ export const getAutharization = () => {
   };
 };
 
-export const loginUserOnSite = ({ email, password, rememberMe }) => {
+export const loginUserOnSite = (email, password, rememberMe, setStatus, setSubmitting) => {
   return (dispatch) => {
-    authAPI.login({ email, password, rememberMe }).then((data) => {
+    authAPI.login(email, password, rememberMe).then((data) => {
       if (data.resultCode === 0) {
-        console.log("LOGIN: OK");
         dispatch(getAutharization());
-      } else if (data.resultCode === 1) {
-        console.log("LOGIN: request is invalid");
-      } else if (data.resultCode === 10) {
-        console.log("LOGIN: please captcha");
+      } else {
+        setStatus(data.messages);
       }
+      setSubmitting(false);
     });
   };
 };

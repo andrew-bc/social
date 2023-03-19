@@ -1,60 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "./UserStatus.module.css";
 
-class UserStatus extends React.Component {
-  state = {
-    editMode: false,
-    status: this.props.status,
+const UserStatus = (props) => {
+  const [editMode, setEditMode] = useState(false);
+  const [status, setStatus] = useState(props.status);
+
+  const handleFocus = (event) => {
+    setStatus(props.status);
+    event.target.select();
+  };
+  const changeStatus = (event) => setStatus(event.target.value);
+
+  const activateEditMode = () => {
+    setEditMode(true);
   };
 
-  handleFocus = (event) => event.target.select();
-  changeStatus = (event) => this.setState({ status: event.target.value });
-
-  activateEditMode = () => {
-    this.setState({ editMode: true });
+  const deactivateEditMode = (event) => {
+    setEditMode(false);
+    props.setStatus(status);
   };
 
-  deactivateEditMode = (event) => {
-    this.setState({ editMode: false });
-    this.props.setStatus(this.state.status);
-  };
-
-  componentDidUpdate() {}
-
-  render() {
-    if (!this.state.editMode) {
-      if (this.props.myId === this.props.userId) {
-        if (this.props.status) {
-          return (
-            <span className={s.status__span_my} onClick={this.activateEditMode}>
-              {this.props.status}
-            </span>
-          );
-        } else {
-          return (
-            <span className={s.status__span_nostatus} onClick={this.activateEditMode}>
-              Click to change your status...
-            </span>
-          );
-        }
+  if (!editMode) {
+    if (props.myId === props.userId) {
+      if (props.status) {
+        return (
+          <span className={s.status__span_my} onClick={activateEditMode}>
+            {props.status}
+          </span>
+        );
       } else {
-        return <span className={s.status__span}>{this.props.status}</span>;
+        return (
+          <span className={s.status__span_nostatus} onClick={activateEditMode}>
+            Click to change your status...
+          </span>
+        );
       }
     } else {
-      return (
-        <>
-          <input
-            className={s.status__input}
-            onBlur={this.deactivateEditMode}
-            onFocus={this.handleFocus}
-            autoFocus
-            value={this.state.status}
-            onChange={this.changeStatus}
-          />
-        </>
-      );
+      return <span className={s.status__span}>{props.status}</span>;
     }
+  } else {
+    return (
+      <>
+        <input
+          className={s.status__input}
+          onBlur={deactivateEditMode}
+          onFocus={handleFocus}
+          autoFocus
+          value={status}
+          onChange={changeStatus}
+        />
+      </>
+    );
   }
-}
+};
 
 export default UserStatus;

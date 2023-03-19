@@ -1,6 +1,6 @@
 import s from "./ProfileInfo.module.css";
 import noAvatar from "./../../../img/noAvatar.svg";
-import Preload from "./../../Users/Preload/Preload";
+import Preload from "../../Preload/Preload";
 import normalizeUrl from "normalize-url";
 import UserStatus from "./UserStatus/UserStatus";
 

@@ -14,8 +14,15 @@ const LoginForm = (props) => {
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string().required("Required"),
     }),
-    onSubmit: (values) => {
-      console.log("result: ", props.loginUserOnSite(values));
+    onSubmit: (values, onSubmitProps) => {
+      props.loginUserOnSite(
+        values.email,
+        values.password,
+        values.rememberMe,
+        onSubmitProps.setStatus,
+        onSubmitProps.setSubmitting
+      );
+      onSubmitProps.setSubmitting(true);
     },
   });
 
@@ -59,7 +66,10 @@ const LoginForm = (props) => {
           />
           Remember me!
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={formik.isSubmitting}>
+          Log In
+        </button>
+        {formik.status && <div className={s.error}>{formik.status}</div>}
       </form>
     </div>
   );

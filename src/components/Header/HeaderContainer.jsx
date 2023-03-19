@@ -3,15 +3,9 @@ import { connect } from "react-redux";
 import Header from "./Header";
 import { getAutharization, logoutUserFromSite } from "./../../redux/authReducer";
 
-class HeaderContainer extends React.Component {
-  componentDidMount() {
-    this.props.getAutharization();
-  }
-
-  render() {
-    return <Header {...this.props} />;
-  }
-}
+const HeaderContainer = (props) => {
+  return <Header {...props} />;
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -19,4 +13,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getAutharization, logoutUserFromSite })(HeaderContainer);
+export default connect(mapStateToProps, { logoutUserFromSite })(HeaderContainer);

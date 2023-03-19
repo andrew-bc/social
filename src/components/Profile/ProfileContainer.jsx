@@ -1,51 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import s from "./Profile.module.css";
 import Profile from "./Profile";
 import { connect } from "react-redux";
 import { getProfile, setStatus } from "./../../redux/profileReducer";
 import { compose } from "redux";
+const ProfileContainer = (props) => {
+  let { userId } = useParams();
+  let navigate = useNavigate();
 
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return <Component {...props} router={{ location, navigate, params }} />;
-  }
-
-  return ComponentWithRouterProp;
-}
-
-class ProfileContainer extends React.Component {
-  renderProfile(userId) {
-    this.props.getProfile(userId);
-  }
-
-  componentDidMount() {
-    let userId = this.props.router.params.userId;
+  useEffect(() => {
     if (!userId) {
-      userId = 28257;
-    }
-    this.renderProfile(userId);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.isMain !== prevProps.isMain) {
-      if (this.props.isMain) {
-        this.renderProfile(28257);
+      if (props.auth.isAuth) {
+        props.getProfile(props.auth.id);
+      } else {
+        navigate("/login");
       }
+    } else {
+      props.getProfile(userId);
     }
-  }
+  }, [userId, props.auth.id]);
 
-  render() {
-    return (
-      <div className={s.content}>
-        <Profile {...this.props} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={s.content}>
+      <Profile {...props} />
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -54,4 +35,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default compose(connect(mapStateToProps, { getProfile, setStatus }), withRouter)(ProfileContainer);
+export default compose(connect(mapStateToProps, { getProfile, setStatus }))(ProfileContainer);
