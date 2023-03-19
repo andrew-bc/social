@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/andrew-bc/social/static/css/main.7006011f.css",
-    "main.js": "/andrew-bc/social/static/js/main.9a436b68.js",
+    "main.js": "/andrew-bc/social/static/js/main.787646ca.js",
     "static/js/787.9181411e.chunk.js": "/andrew-bc/social/static/js/787.9181411e.chunk.js",
     "static/media/content_header.png": "/andrew-bc/social/static/media/content_header.c3f2fdd8497c568e638a.png",
     "static/media/website.png": "/andrew-bc/social/static/media/website.eb6d9634c5df1a272a11.png",
@@ -14,11 +14,11 @@
     "static/media/preload.svg": "/andrew-bc/social/static/media/preload.2bb927693b5738ca18ea161bcb28f167.svg",
     "static/media/noAvatar.svg": "/andrew-bc/social/static/media/noAvatar.9fd9547f6f53286029f1cea1b2b28ffe.svg",
     "main.7006011f.css.map": "/andrew-bc/social/static/css/main.7006011f.css.map",
-    "main.9a436b68.js.map": "/andrew-bc/social/static/js/main.9a436b68.js.map",
+    "main.787646ca.js.map": "/andrew-bc/social/static/js/main.787646ca.js.map",
     "787.9181411e.chunk.js.map": "/andrew-bc/social/static/js/787.9181411e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7006011f.css",
-    "static/js/main.9a436b68.js"
+    "static/js/main.787646ca.js"
   ]
 }
