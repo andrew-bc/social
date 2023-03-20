@@ -3,6 +3,7 @@ import { profileAPI } from "../api/api";
 const ADD_POST = "ADD_POST";
 const SET_PROFILE = "SET_PROFILE";
 const SET_STATUS_ONLY_IN_STATE = "SET_STATUS_ONLY_IN_STATE";
+const SET_AVATAR = "SET_AVATAR";
 
 let initialState = {
   profile: null,
@@ -31,6 +32,9 @@ let profileReducer = (state = initialState, action) => {
     case SET_STATUS_ONLY_IN_STATE: {
       return { ...state, profile: { ...state.profile, status: action.statusText } };
     }
+    case SET_AVATAR: {
+      return { ...state, profile: { ...state.profile, ...action.photos } };
+    }
     default:
       return state;
   }
@@ -40,6 +44,7 @@ export default profileReducer;
 
 export const addPost = (text) => ({ type: ADD_POST, message: text });
 export const setProfile = (profile) => ({ type: SET_PROFILE, profile: profile });
+export const setAvatar = (photos) => ({ type: SET_AVATAR, photos });
 export const setStatusOnlyInState = (statusText) => ({ type: SET_STATUS_ONLY_IN_STATE, statusText });
 
 export const getProfile = (userId) => {
@@ -62,6 +67,16 @@ export const setStatus = (statusText) => {
     profileAPI.setStatus(statusText).then((data) => {
       if (data.resultCode === 0) {
         dispatch(setStatusOnlyInState(statusText));
+      }
+    });
+  };
+};
+
+export const uploadAvatar = (photo) => {
+  return (dispatch) => {
+    profileAPI.setAvatar(photo).then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(setAvatar(data.data));
       }
     });
   };

@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import s from "./UserItem.module.css";
-import noAvatarImage from "../../../img/user_wall.png";
+import noAvatarImage from "./../../../img/user_wall.png";
 
 const UserItem = (props) => {
   return (
     <div className={s.userItem}>
       <div className={s.avatar}>
         <Link to={"/profile/" + props.userInfo.id}>
-          <img src={props.userInfo.photos.large ? props.userInfo.photos.large : noAvatarImage} alt="avatar" />
+          <img src={props.userInfo.photos.small ? props.userInfo.photos.small : noAvatarImage} alt="avatar" />
         </Link>
       </div>
       <div className={s.info}>

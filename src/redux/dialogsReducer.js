@@ -1,20 +1,22 @@
+import user_wall from "./../img/user_wall.png";
+
 const SEND_MESSAGE = "SEND_MESSAGE";
 const UPDATE_NEW_MESSAGE = "UPDATE_NEW_MESSAGE";
 
 let initialState = {
   dialogs: [
-    { id: 1, name: "Władek", src: "img/user_wall.png" },
-    { id: 2, name: "Jacek", src: "img/user_wall.png" },
-    { id: 3, name: "Kuba", src: "img/user_wall.png" },
+    { id: 1, name: "Władek", src: user_wall },
+    { id: 2, name: "Jacek", src: user_wall },
+    { id: 3, name: "Kuba", src: user_wall },
   ],
   messages: [
-    { id: 1, name: "Władek", message: "Great!", src: "img/user_wall.png" },
-    { id: 2, name: "Me", message: "Fine! And you?", src: "img/avatar.jpg" },
+    { id: 1, name: "Władek", message: "Great!", src: user_wall },
+    { id: 2, name: "Me", message: "Fine! And you?", src: "./../img/avatar.jpg" },
     {
       id: 3,
       name: "Władek",
       message: "Hello! How are you?",
-      src: "img/user_wall.png",
+      src: user_wall,
     },
   ],
   newMessage: "",

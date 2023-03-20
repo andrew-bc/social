@@ -1,0 +1,15 @@
+.user__avatar__upload {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(241, 241, 241, 0.6);
+  line-height: 50px;
+  text-align: center;
+  bottom: 0px;
+}
+.user__avatar__upload:hover {
+  cursor: pointer;
+  background-color: rgba(241, 241, 241, 0.8);
+}
+
+.user__avatar__upload img {
+}

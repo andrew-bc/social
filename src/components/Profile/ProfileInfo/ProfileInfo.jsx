@@ -3,6 +3,8 @@ import noAvatar from "./../../../img/noAvatar.svg";
 import Preload from "../../Preload/Preload";
 import normalizeUrl from "normalize-url";
 import UserStatus from "./UserStatus/UserStatus";
+import upload_photo from "./../../../img/upload_photo.png";
+import FileUploader from "./FileUploader/FileUploader";
 
 const ProfileInfo = (props) => {
   const socialLinksElements = (data) => {
@@ -25,11 +27,13 @@ const ProfileInfo = (props) => {
     return <Preload />;
   }
   return (
-    <div>
-      <div className={s.content__header}></div>
+    <div className={s.content}>
       <div className={s.content__user}>
         <div className={s.user__avatar}>
-          <img src={props.profile.photos.large ? props.profile.photos.large : noAvatar} alt="Profile" width="300" />
+          <div className={s.user__avatar__photo}>
+            <img src={props.profile.photos.large ? props.profile.photos.large : noAvatar} alt="Profile" width="300" />
+          </div>
+          {props.myId === props.profile.userId ? <FileUploader uploadAvatar={props.uploadAvatar} /> : null}
         </div>
         <div className={s.user__info}>
           <div className={s.info__fullName}>{props.profile.fullName}</div>

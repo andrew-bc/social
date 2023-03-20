@@ -8,8 +8,6 @@ let instance = axios.create({
   },
 });
 
-console.log(process.env.REACT_APP_API_KEY);
-
 export const usersAPI = {
   getUsers(pageSize, currentPage) {
     return instance.get(`users?count=${pageSize}&page=${currentPage}`).then((response) => response.data);
@@ -34,6 +32,13 @@ export const profileAPI = {
   },
   setStatus(statusText) {
     return instance.put(`profile/status`, { status: statusText }).then((response) => response.data);
+  },
+  setAvatar(photo) {
+    const formData = new FormData();
+    formData.append("image", photo);
+    return instance
+      .put(`profile/photo`, formData, { headers: { "Content-Type": "multipart/form-data" } })
+      .then((response) => response.data);
   },
 };
 
