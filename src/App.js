@@ -34,26 +34,28 @@ const App = (props) => {
   if (!props.initialized) return <Preload />;
 
   return (
-    <div className="app-wrapper">
+    <>
       <HeaderContainer />
-      <div className="wrapper">
-        <div className="main">
-          <Sidebar />
-          <Routes>
-            <Route path="/" element={<ProfileContainer />} />
-            <Route path="/profile" element={<ProfileContainer />} />
-            <Route path="/profile/:userId" element={<ProfileContainer />} />
-            <Route path="/dialogs/*" element={<DialogsContainer />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/music" element={<Music />} />
-            <Route path="/users" element={<UsersContainer totalCount={props.totalCount} />} />
-            <Route path="/users/:page" element={<UsersContainer />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/login" element={<LoginContainer />} />
-          </Routes>
+      <div className="app-wrapper">
+        <div className="wrapper">
+          <div className="main">
+            <Sidebar />
+            <Routes>
+              <Route path="/" element={<ProfileContainer />} />
+              <Route path="/profile" element={<ProfileContainer />} />
+              <Route path="/profile/:userId" element={<ProfileContainer />} />
+              <Route path="/dialogs/*" element={<DialogsContainer />} />
+              <Route path="/news" element={<News />} />
+              <Route path="/music" element={<Music />} />
+              <Route path="/users" element={<UsersContainer totalCount={props.totalCount} />} />
+              <Route path="/users/:page" element={<UsersContainer />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/login" element={<LoginContainer />} />
+            </Routes>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

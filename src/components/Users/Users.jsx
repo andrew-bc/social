@@ -1,10 +1,21 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 import UserItem from "./UserItem/UserItem";
+import { useSelector } from "react-redux";
+import { Error } from "./../Error/Error";
+import { useEffect } from "react";
 
 import s from "./Users.module.css";
 
 const Users = (props) => {
+  const isError = useSelector((state) => state.error.isError);
+  const errorText = useSelector((state) => state.error.errorText);
+  useEffect(() => {
+    if (isError) {
+      <Error errorText={errorText} />;
+    }
+  }, [isError, errorText]);
+
   const getUsersElements = () => {
     return props.users.map((user) => (
       <UserItem
@@ -14,6 +25,7 @@ const Users = (props) => {
         unfollow={props.unfollow}
         followingInprogress={props.followingInprogress}
         setIsFollowinfInProgress={props.setIsFollowinfInProgress}
+        isAuth={props.isAuth}
       ></UserItem>
     ));
   };
@@ -51,6 +63,7 @@ const Users = (props) => {
       <ul className={s.pagination}>{getPaginationElements()}</ul>
       <div className={s.users}>{getUsersElements()}</div>
       <ul className={s.pagination}>{getPaginationElements()}</ul>
+      {isError ? <Error errorText={errorText} /> : ""}
     </div>
   );
 };

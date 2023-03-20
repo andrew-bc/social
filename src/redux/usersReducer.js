@@ -1,4 +1,5 @@
 import { usersAPI } from "./../api/api";
+import { setIsError, setErrorText } from "./../redux/errorReducer";
 
 const SET_USERS = "SET_USERS";
 const FOLLOW = "FOLLOW";
@@ -84,40 +85,70 @@ export const setIsFollowinfInProgress = (userId, isFetching) => ({
 
 export const getTotalCount = () => {
   return (dispatch) => {
-    usersAPI.getTotalCount().then((totalCount) => {
-      dispatch(setTotalCount(totalCount));
-    });
+    usersAPI
+      .getTotalCount()
+      .then((totalCount) => {
+        dispatch(setTotalCount(totalCount));
+      })
+      .catch((e) => {
+        dispatch(setIsError(true));
+        dispatch(setErrorText(e.message));
+      });
   };
 };
 export const getUsers = (pageSize, currentPage) => {
   return (dispatch) => {
     dispatch(setIsFetching(true));
-    usersAPI.getUsers(pageSize, currentPage).then((data) => {
-      dispatch(setIsFetching(false));
-      dispatch(setUsers(data.items));
-      dispatch(setTotalCount(data.totalCount));
-    });
+    usersAPI
+      .getUsers(pageSize, currentPage)
+      .then((data) => {
+        dispatch(setIsFetching(false));
+        dispatch(setUsers(data.items));
+        dispatch(setTotalCount(data.totalCount));
+      })
+      .catch((e) => {
+        dispatch(setIsError(true));
+        dispatch(setErrorText(e.message));
+      });
   };
 };
 export const follow = (userId) => {
   return (dispatch) => {
     dispatch(setIsFollowinfInProgress(userId, true));
-    usersAPI.follow(userId).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(followSuccess(userId));
-      }
-      dispatch(setIsFollowinfInProgress(userId, false));
-    });
+    usersAPI
+      .follow(userId)
+      .then((data) => {
+        if (data.resultCode === 0) {
+          dispatch(followSuccess(userId));
+        } else {
+          dispatch(setIsError(true));
+          dispatch(setErrorText(data.messages[0]));
+        }
+        dispatch(setIsFollowinfInProgress(userId, false));
+      })
+      .catch((e) => {
+        dispatch(setIsError(true));
+        dispatch(setErrorText(e.message));
+      });
   };
 };
 export const unfollow = (userId) => {
   return (dispatch) => {
     dispatch(setIsFollowinfInProgress(userId, true));
-    usersAPI.unfollow(userId).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(unfollowSuccess(userId));
-      }
-      dispatch(setIsFollowinfInProgress(userId, false));
-    });
+    usersAPI
+      .unfollow(userId)
+      .then((data) => {
+        if (data.resultCode === 0) {
+          dispatch(unfollowSuccess(userId));
+        } else {
+          dispatch(setIsError(true));
+          dispatch(setErrorText(data.messages[0]));
+        }
+        dispatch(setIsFollowinfInProgress(userId, false));
+      })
+      .catch((e) => {
+        dispatch(setIsError(true));
+        dispatch(setErrorText(e.message));
+      });
   };
 };

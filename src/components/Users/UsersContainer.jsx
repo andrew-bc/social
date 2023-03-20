@@ -48,6 +48,7 @@ const UsersContainer = (props) => {
           onChangedPageNumber={onChangedPageNumber}
           setIsFollowinfInProgress={props.setIsFollowinfInProgress}
           followingInprogress={props.followingInprogress}
+          isAuth={props.isAuth}
         />
       )}
     </div>
@@ -62,6 +63,7 @@ const mapStateToProps = (state) => {
     pageSize: state.users.pageSize,
     isFetching: state.users.isFetching,
     followingInprogress: state.users.followingInprogress,
+    isAuth: state.auth.isAuth,
   };
 };
 

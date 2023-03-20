@@ -6,6 +6,7 @@ import usersReducer from "./usersReducer";
 import authReducer from "./authReducer";
 import thunkMiddleware from "redux-thunk";
 import appReducer from "./appReducer";
+import errorReducer from "./errorReducer";
 
 let reducers = combineReducers({
   profilePage: profileReducer,
@@ -14,6 +15,7 @@ let reducers = combineReducers({
   users: usersReducer,
   auth: authReducer,
   app: appReducer,
+  error: errorReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import s from "./UserStatus.module.css";
 
 const UserStatus = (props) => {
@@ -9,7 +9,9 @@ const UserStatus = (props) => {
     setStatus(props.status);
     event.target.select();
   };
-  const changeStatus = (event) => setStatus(event.target.value);
+  const changeStatus = (event) => {
+    setStatus(event.target.value);
+  };
 
   const activateEditMode = () => {
     setEditMode(true);

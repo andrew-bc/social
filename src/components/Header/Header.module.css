@@ -26,7 +26,7 @@
   margin: 0 10px 0 0;
 }
 
-.header__title {
+.header__title a {
   font-size: 20px;
 }
 

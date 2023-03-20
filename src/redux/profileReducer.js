@@ -1,4 +1,5 @@
 import { profileAPI } from "../api/api";
+import { setIsError, setErrorText } from "./../redux/errorReducer";
 
 const ADD_POST = "ADD_POST";
 const SET_PROFILE = "SET_PROFILE";
@@ -52,32 +53,60 @@ export const getProfile = (userId) => {
     profileAPI
       .getProfileByUserId(userId)
       .then((data) => dispatch(setProfile(data)))
-      .then(() => dispatch(getStatus(userId)));
+      .then(() => dispatch(getStatus(userId)))
+      .catch((e) => {
+        dispatch(setIsError(true));
+        dispatch(setErrorText(e.message));
+      });
   };
 };
 
 export const getStatus = (userId) => {
   return (dispatch) => {
-    profileAPI.getStatus(userId).then((data) => dispatch(setStatusOnlyInState(data)));
+    profileAPI
+      .getStatus(userId)
+      .then((data) => dispatch(setStatusOnlyInState(data)))
+      .catch((e) => {
+        dispatch(setIsError(true));
+        dispatch(setErrorText(e.message));
+      });
   };
 };
 
 export const setStatus = (statusText) => {
   return (dispatch) => {
-    profileAPI.setStatus(statusText).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(setStatusOnlyInState(statusText));
-      }
-    });
+    profileAPI
+      .setStatus(statusText)
+      .then((data) => {
+        if (data.resultCode === 0) {
+          dispatch(setStatusOnlyInState(statusText));
+        } else {
+          dispatch(setIsError(true));
+          dispatch(setErrorText(data.messages[0]));
+        }
+      })
+      .catch((e) => {
+        dispatch(setIsError(true));
+        dispatch(setErrorText(e.message));
+      });
   };
 };
 
 export const uploadAvatar = (photo) => {
   return (dispatch) => {
-    profileAPI.setAvatar(photo).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(setAvatar(data.data));
-      }
-    });
+    profileAPI
+      .setAvatar(photo)
+      .then((data) => {
+        if (data.resultCode === 0) {
+          dispatch(setAvatar(data.data));
+        } else {
+          dispatch(setIsError(true));
+          dispatch(setErrorText(data.messages[0]));
+        }
+      })
+      .catch((e) => {
+        dispatch(setIsError(true));
+        dispatch(setErrorText(e.message));
+      });
   };
 };

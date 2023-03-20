@@ -17,29 +17,31 @@ const UserItem = (props) => {
         </div>
         {props.userInfo.status ? <div className={s.info__status}>{props.userInfo.status}</div> : ""}
       </div>
-      <div className={s.but}>
-        {props.userInfo.followed ? (
-          <button
-            disabled={props.followingInprogress.includes(props.userInfo.id)}
-            className={s.info__unfollow}
-            onClick={() => {
-              props.unfollow(props.userInfo.id);
-            }}
-          >
-            Unfollow
-          </button>
-        ) : (
-          <button
-            disabled={props.followingInprogress.includes(props.userInfo.id)}
-            className={s.info__follow}
-            onClick={() => {
-              props.follow(props.userInfo.id);
-            }}
-          >
-            Follow
-          </button>
-        )}
-      </div>
+      {props.isAuth && (
+        <div className={s.but}>
+          {props.userInfo.followed ? (
+            <button
+              disabled={props.followingInprogress.includes(props.userInfo.id)}
+              className={s.info__unfollow}
+              onClick={() => {
+                props.unfollow(props.userInfo.id);
+              }}
+            >
+              Unfollow
+            </button>
+          ) : (
+            <button
+              disabled={props.followingInprogress.includes(props.userInfo.id)}
+              className={s.info__follow}
+              onClick={() => {
+                props.follow(props.userInfo.id);
+              }}
+            >
+              Follow
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

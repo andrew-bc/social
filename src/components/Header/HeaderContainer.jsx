@@ -10,6 +10,7 @@ const HeaderContainer = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
+    avatar: state.profilePage.profile?.photos?.small,
   };
 };
 
