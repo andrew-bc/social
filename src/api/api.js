@@ -46,12 +46,15 @@ export const authAPI = {
   getAutharization() {
     return instance.get(`auth/me`).then((response) => response.data);
   },
-  login(email, password, rememberMe) {
+  login(email, password, rememberMe, captcha) {
     return instance
-      .post(`auth/login`, { email: email, password: password, rememberMe: rememberMe })
+      .post(`auth/login`, { email: email, password: password, rememberMe: rememberMe, captcha: captcha })
       .then((response) => response.data);
   },
   logout() {
     return instance.post(`auth/logout`).then((response) => response.data);
+  },
+  getCaptcha() {
+    return instance.post(`security/get-captcha-url`).then((response) => response.data);
   },
 };

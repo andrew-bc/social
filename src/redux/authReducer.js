@@ -2,18 +2,23 @@ import { authAPI } from "./../api/api";
 import { setIsError, setErrorText } from "./../redux/errorReducer";
 
 const SET_AUTH_DATA = "SET_AUTH_DATA";
+const SET_CAPTCHA_URL = "SET_CAPTCHA_URL";
 
 let initialState = {
   id: null,
   email: null,
   login: null,
   isAuth: false,
+  captchaURL: null,
 };
 
 let authReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_AUTH_DATA: {
-      return { id: action.id, email: action.email, login: action.login, isAuth: action.isAuth };
+      return { ...state, id: action.id, email: action.email, login: action.login, isAuth: action.isAuth };
+    }
+    case SET_CAPTCHA_URL: {
+      return { ...state, captchaURL: action.captchaURL };
     }
     default:
       return state;
@@ -23,6 +28,7 @@ let authReducer = (state = initialState, action) => {
 export default authReducer;
 
 export const setAuthData = (id, email, login, isAuth) => ({ type: SET_AUTH_DATA, id, email, login, isAuth });
+export const setCaptchaURL = (captchaURL) => ({ type: SET_CAPTCHA_URL, captchaURL });
 
 export const getAutharization = () => {
   return (dispatch) => {
@@ -48,13 +54,17 @@ export const getAutharization = () => {
   };
 };
 
-export const loginUserOnSite = (email, password, rememberMe, setStatus, setSubmitting) => {
+export const loginUserOnSite = (email, password, rememberMe, captcha, setStatus, setSubmitting) => {
   return (dispatch) => {
     authAPI
-      .login(email, password, rememberMe)
+      .login(email, password, rememberMe, captcha)
       .then((data) => {
         if (data.resultCode === 0) {
           dispatch(getAutharization());
+          dispatch(setCaptchaURL(null));
+        } else if (data.resultCode === 10) {
+          dispatch(getCaptchaURL());
+          setStatus(data.messages);
         } else {
           setStatus(data.messages);
         }
@@ -78,6 +88,20 @@ export const logoutUserFromSite = () => {
           dispatch(setIsError(true));
           dispatch(setErrorText(data.messages[0]));
         }
+      })
+      .catch((e) => {
+        dispatch(setIsError(true));
+        dispatch(setErrorText(e.message));
+      });
+  };
+};
+
+export const getCaptchaURL = () => {
+  return (dispatch) => {
+    authAPI
+      .getCaptcha()
+      .then((data) => {
+        dispatch(setCaptchaURL(data.url));
       })
       .catch((e) => {
         dispatch(setIsError(true));
