@@ -8,6 +8,8 @@ import FileUploader from "./FileUploader/FileUploader";
 import { useSelector } from "react-redux";
 import { Error } from "../../Error/Error";
 import { useEffect } from "react";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const ProfileInfo = (props) => {
   const isError = useSelector((state) => state.error.isError);
@@ -53,6 +55,11 @@ const ProfileInfo = (props) => {
           {props.myId === props.profile.userId ? <FileUploader uploadAvatar={props.uploadAvatar} /> : null}
         </div>
         <div className={s.user__info}>
+          {props.myId === props.profile.userId ? (
+            <Link to="/edit">
+              <Button>Edit profile</Button>
+            </Link>
+          ) : null}
           <div className={s.info__fullName}>{props.profile.fullName}</div>
           <div className={s.info__bio}>
             <div className={s.bio__status}>

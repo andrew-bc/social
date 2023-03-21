@@ -20,10 +20,10 @@
   max-width: 400px;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"],
-button {
+.loginForm input[type="email"],
+.loginForm input[type="password"],
+.loginForm input[type="text"],
+.loginForm button {
   font-size: 16px;
   box-sizing: border-box;
   border: 1px solid;

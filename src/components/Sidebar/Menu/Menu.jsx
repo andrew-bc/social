@@ -10,7 +10,6 @@ import { NavLink } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MessageIcon from "@mui/icons-material/Message";
 import FeedIcon from "@mui/icons-material/Feed";
-import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import PeopleIcon from "@mui/icons-material/People";
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -54,14 +53,6 @@ let Menu = () => {
             <FeedIcon fontSize="large" />
           </ListItemIcon>
           <ListItemText primary="News" />
-        </ListItemButton>
-      </ListItem>
-      <ListItem disablePadding>
-        <ListItemButton component={NavLink} exact={`${true}`} to="/music">
-          <ListItemIcon>
-            <LibraryMusicIcon fontSize="large" />
-          </ListItemIcon>
-          <ListItemText primary="Music" />
         </ListItemButton>
       </ListItem>
       <ListItem disablePadding>

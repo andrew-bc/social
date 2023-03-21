@@ -1,7 +1,7 @@
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
 import News from "./components/News/News";
-import Music from "./components/Music/Music";
+import EditProfile from "./components/EditProfile/EditProfile";
 import Settings from "./components/Settings/Settings";
 import { Routes, Route, useLocation, useNavigate, useParams } from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
@@ -46,7 +46,7 @@ const App = (props) => {
               <Route path="/profile/:userId" element={<ProfileContainer />} />
               <Route path="/dialogs/*" element={<DialogsContainer />} />
               <Route path="/news" element={<News />} />
-              <Route path="/music" element={<Music />} />
+              <Route path="/edit" element={<EditProfile />} />
               <Route path="/users" element={<UsersContainer totalCount={props.totalCount} />} />
               <Route path="/users/:page" element={<UsersContainer />} />
               <Route path="/settings" element={<Settings />} />

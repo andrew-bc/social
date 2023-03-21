@@ -9,9 +9,6 @@ const UserStatus = (props) => {
     setStatus(props.status);
     event.target.select();
   };
-  const changeStatus = (event) => {
-    setStatus(event.target.value);
-  };
 
   const activateEditMode = () => {
     setEditMode(true);
@@ -48,8 +45,8 @@ const UserStatus = (props) => {
           onBlur={deactivateEditMode}
           onFocus={handleFocus}
           autoFocus
-          value={status}
-          onChange={changeStatus}
+          value={status ?? ""}
+          onChange={(e) => setStatus(e.target.value)}
         />
       </>
     );

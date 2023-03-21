@@ -9,52 +9,67 @@ let instance = axios.create({
 });
 
 export const usersAPI = {
-  getUsers(pageSize, currentPage) {
-    return instance.get(`users?count=${pageSize}&page=${currentPage}`).then((response) => response.data);
+  async getUsers(pageSize, currentPage) {
+    const response = await instance.get(`users?count=${pageSize}&page=${currentPage}`);
+    return response.data;
   },
-  getTotalCount() {
-    return instance.get(`users?count=1&page=1`).then((response) => response.data.totalCount);
+  async getTotalCount() {
+    const response = await instance.get(`users?count=1&page=1`);
+    return response.data.totalCount;
   },
-  follow(id) {
-    return instance.post(`follow/${id}`).then((response) => response.data);
+  async follow(id) {
+    const response = await instance.post(`follow/${id}`);
+    return response.data;
   },
-  unfollow(id) {
-    return instance.delete(`follow/${id}`).then((response) => response.data);
+  async unfollow(id) {
+    const response = await instance.delete(`follow/${id}`);
+    return response.data;
   },
 };
 
 export const profileAPI = {
-  getProfileByUserId(userId) {
-    return instance.get(`profile/${userId}`).then((response) => response.data);
+  async getProfileByUserId(userId) {
+    const response = await instance.get(`profile/${userId}`);
+    return response.data;
   },
-  getStatus(userId) {
-    return instance.get(`profile/status/${userId}`).then((response) => response.data);
+  async getStatus(userId) {
+    const response = await instance.get(`profile/status/${userId}`);
+    return response.data;
   },
-  setStatus(statusText) {
-    return instance.put(`profile/status`, { status: statusText }).then((response) => response.data);
+  async setStatus(statusText) {
+    const response = await instance.put(`profile/status`, { status: statusText });
+    return response.data;
   },
-  setAvatar(photo) {
+  async setAvatar(photo) {
     const formData = new FormData();
     formData.append("image", photo);
-    return instance
-      .put(`profile/photo`, formData, { headers: { "Content-Type": "multipart/form-data" } })
-      .then((response) => response.data);
+    const response = await instance.put(`profile/photo`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
   },
 };
 
 export const authAPI = {
-  getAutharization() {
-    return instance.get(`auth/me`).then((response) => response.data);
+  async getAutharization() {
+    const response = await instance.get(`auth/me`);
+    return response.data;
   },
-  login(email, password, rememberMe, captcha) {
-    return instance
-      .post(`auth/login`, { email: email, password: password, rememberMe: rememberMe, captcha: captcha })
-      .then((response) => response.data);
+  async login(email, password, rememberMe, captcha) {
+    const response = await instance.post(`auth/login`, {
+      email: email,
+      password: password,
+      rememberMe: rememberMe,
+      captcha: captcha,
+    });
+    return response.data;
   },
-  logout() {
-    return instance.post(`auth/logout`).then((response) => response.data);
+  async logout() {
+    const response = await instance.post(`auth/logout`);
+    return response.data;
   },
-  getCaptcha() {
-    return instance.post(`security/get-captcha-url`).then((response) => response.data);
+  async getCaptcha() {
+    const response = await instance.post(`security/get-captcha-url`);
+    return response.data;
   },
 };

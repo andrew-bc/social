@@ -1,5 +1,6 @@
 import { profileAPI } from "../api/api";
 import { setIsError, setErrorText } from "./../redux/errorReducer";
+import { getAutharization } from "./authReducer";
 
 const ADD_POST = "ADD_POST";
 const SET_PROFILE = "SET_PROFILE";
@@ -52,7 +53,9 @@ export const getProfile = (userId) => {
   return (dispatch) => {
     profileAPI
       .getProfileByUserId(userId)
-      .then((data) => dispatch(setProfile(data)))
+      .then((data) => {
+        dispatch(setProfile(data));
+      })
       .then(() => dispatch(getStatus(userId)))
       .catch((e) => {
         dispatch(setIsError(true));
@@ -99,6 +102,7 @@ export const uploadAvatar = (photo) => {
       .then((data) => {
         if (data.resultCode === 0) {
           dispatch(setAvatar(data.data));
+          dispatch(getAutharization());
         } else {
           dispatch(setIsError(true));
           dispatch(setErrorText(data.messages[0]));
