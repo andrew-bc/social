@@ -40,6 +40,10 @@ export const profileAPI = {
     const response = await instance.put(`profile/status`, { status: statusText });
     return response.data;
   },
+  async setProfileInfo(data) {
+    const response = await instance.put(`profile`, data);
+    return response.data;
+  },
   async setAvatar(photo) {
     const formData = new FormData();
     formData.append("image", photo);

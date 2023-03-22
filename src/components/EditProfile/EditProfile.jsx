@@ -1,7 +1,19 @@
+// TODO -switch not work
+
 import s from "./EditProfile.module.css";
-import { useFormik } from "formik";
+import { useFormik, getIn } from "formik";
 import * as Yup from "yup";
-import { Button, FormControl, FormControlLabel, InputAdornment, Switch, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Button,
+  FormControl,
+  FormControlLabel,
+  InputAdornment,
+  Switch,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import vkicon from "./../../img/social/vk.png";
 import githubicon from "./../../img/social/github.png";
@@ -12,8 +24,21 @@ import websiteicon from "./../../img/social/website.png";
 import youtubeicon from "./../../img/social/youtube.png";
 import mainLinkicon from "./../../img/social/mainLink.png";
 import fakeAvatar from "./../../img/avatar.jpg";
+import { useEffect, useRef, useState } from "react";
+import { profileAPI } from "../../api/api";
+import { useSelector } from "react-redux";
+
 const EditProfile = () => {
+  const URL =
+    /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
+
+  const [confirmMessage, setConfirmMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const alertRef = useRef(null);
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       fullName: "",
       aboutMe: "",
@@ -30,27 +55,61 @@ const EditProfile = () => {
         mainLink: "",
       },
     },
-    // validationSchema: Yup.object({
-    //   email: Yup.string().email("Invalid email address").required("Required"),
-    //   password: Yup.string().required("Required"),
-    //   captcha: props.captchaURL ? Yup.string().required("Required") : Yup.string(),
-    // }),
-    // onSubmit: (values, onSubmitProps) => {
-    //   props.loginUserOnSite(
-    //     values.email,
-    //     values.password,
-    //     values.rememberMe,
-    //     values.captcha,
-    //     onSubmitProps.setStatus,
-    //     onSubmitProps.setSubmitting
-    //   );
-    //   onSubmitProps.setSubmitting(true);
-    // },
+    validationSchema: Yup.object({
+      fullName: Yup.string().required("Required"),
+      aboutMe: Yup.string().required("Required"),
+      contacts: Yup.object().shape({
+        github: Yup.string().nullable(true).matches(URL, "Enter correct url"),
+        vk: Yup.string().nullable(true).matches(URL, "Enter correct url"),
+        facebook: Yup.string().nullable(true).matches(URL, "Enter correct url"),
+        instagram: Yup.string().nullable(true).matches(URL, "Enter correct url"),
+        twitter: Yup.string().nullable(true).matches(URL, "Enter correct url"),
+        website: Yup.string().nullable(true).matches(URL, "Enter correct url"),
+        youtube: Yup.string().nullable(true).matches(URL, "Enter correct url"),
+        mainLink: Yup.string().nullable(true).matches(URL, "Enter correct url"),
+      }),
+    }),
+    onSubmit: (values, onSubmitProps) => {
+      onSubmitProps.setSubmitting(true);
+      setConfirmMessage(false);
+      setErrorMessage(null);
+      delete values.photos;
+      delete values.userId;
+      profileAPI
+        .setProfileInfo(values)
+        .then((data) => {
+          if (data.resultCode === 0) {
+            //onSubmitProps.setStatus("Changes saved.Your profile has been successfully updated.");
+            setConfirmMessage(true);
+          } else {
+            //onSubmitProps.setStatus(data.messages);
+            setErrorMessage(data.messages);
+          }
+          alertRef.current.scrollIntoView();
+          onSubmitProps.setSubmitting(false);
+        })
+        .catch((e) => {
+          setErrorMessage(e.messages);
+          onSubmitProps.setSubmitting(false);
+        });
+    },
   });
+
+  const myId = useSelector((state) => state.auth.id);
+
+  useEffect(() => {
+    profileAPI
+      .getProfileByUserId(myId)
+      .then((data) => {
+        formik.setValues(data);
+      })
+      .catch((e) => setErrorMessage(e.messages));
+  }, [myId]);
 
   return (
     <div className={s.content}>
       <FormControl
+        onSubmit={formik.handleSubmit}
         variant="outlined"
         component="form"
         sx={{
@@ -64,19 +123,34 @@ const EditProfile = () => {
           },
         }}
       >
+        <Box ref={alertRef}>
+          {confirmMessage && (
+            <Alert sx={{}} severity="success">
+              <AlertTitle>Changes saved</AlertTitle>
+              Your profile has been successfully updated.
+            </Alert>
+          )}
+          {errorMessage && (
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle> {errorMessage ?? ""}
+            </Alert>
+          )}
+        </Box>
+
         <Box component="div" className={s.top}>
           <Box component="div" className={s.info}>
             <TextField
-              required
               id="fullName"
               name="fullName"
               label="Name"
               placeholder="Enter your name"
-              value={formik.values.fullName}
+              value={formik.values.fullName ?? ""}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.fullName && Boolean(formik.errors.fullName)}
               helperText={formik.touched.fullName && formik.errors.fullName}
             />
+
             <TextField
               multiline
               rows={4}
@@ -84,15 +158,18 @@ const EditProfile = () => {
               name="aboutMe"
               label="Brief information"
               placeholder="Write about yourself"
-              value={formik.values.aboutMe}
+              value={formik.values.aboutMe ?? ""}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.aboutMe && Boolean(formik.errors.aboutMe)}
               helperText={formik.touched.aboutMe && formik.errors.aboutMe}
             />
 
             <FormControlLabel
               sx={{ marginLeft: 0 }}
-              control={<Switch defaultChecked id="lookingForAJob" name="lookingForAJob" />}
+              control={
+                <Switch defaultChecked={formik.values.lookingForAJob} id="lookingForAJob" name="lookingForAJob" />
+              }
               label="Looking for a job"
             />
 
@@ -103,8 +180,9 @@ const EditProfile = () => {
               name="lookingForAJobDescription"
               label="Your skills"
               placeholder="Write about your skills"
-              value={formik.values.lookingForAJobDescription}
+              value={formik.values.lookingForAJobDescription ?? ""}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.lookingForAJobDescription && Boolean(formik.errors.lookingForAJobDescription)}
               helperText={formik.touched.lookingForAJobDescription && formik.errors.lookingForAJobDescription}
             />
@@ -118,13 +196,14 @@ const EditProfile = () => {
           <Box component="div" className={s.contacts}>
             <TextField
               id="github"
-              name="github"
+              name="contacts.github"
               label="github"
               placeholder="Enter your github"
-              value={formik.values.github}
+              value={formik.values.contacts.github ?? ""}
               onChange={formik.handleChange}
-              error={formik.touched.github && Boolean(formik.errors.github)}
-              helperText={formik.touched.github && formik.errors.github}
+              onBlur={formik.handleBlur}
+              error={getIn(formik.touched, "contacts.github") && Boolean(getIn(formik.errors, "contacts.github"))}
+              helperText={getIn(formik.touched, "contacts.github") && getIn(formik.errors, "contacts.github")}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -136,13 +215,14 @@ const EditProfile = () => {
 
             <TextField
               id="vk"
-              name="vk"
+              name="contacts.vk"
               label="vk"
               placeholder="Enter your vk"
-              value={formik.values.vk}
+              value={formik.values.contacts.vk ?? ""}
               onChange={formik.handleChange}
-              error={formik.touched.vk && Boolean(formik.errors.vk)}
-              helperText={formik.touched.vk && formik.errors.vk}
+              onBlur={formik.handleBlur}
+              error={getIn(formik.touched, "contacts.vk") && Boolean(getIn(formik.errors, "contacts.vk"))}
+              helperText={getIn(formik.touched, "contacts.vk") && getIn(formik.errors, "contacts.vk")}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -153,13 +233,14 @@ const EditProfile = () => {
             />
             <TextField
               id="facebook"
-              name="facebook"
+              name="contacts.facebook"
               label="facebook"
               placeholder="Enter your facebook"
-              value={formik.values.facebook}
+              value={formik.values.contacts.facebook ?? ""}
               onChange={formik.handleChange}
-              error={formik.touched.facebook && Boolean(formik.errors.facebook)}
-              helperText={formik.touched.facebook && formik.errors.facebook}
+              onBlur={formik.handleBlur}
+              error={getIn(formik.touched, "contacts.facebook") && Boolean(getIn(formik.errors, "contacts.facebook"))}
+              helperText={getIn(formik.touched, "contacts.facebook") && getIn(formik.errors, "contacts.facebook")}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -170,13 +251,14 @@ const EditProfile = () => {
             />
             <TextField
               id="instagram"
-              name="instagram"
+              name="contacts.instagram"
               label="instagram"
               placeholder="Enter your instagram"
-              value={formik.values.instagram}
+              value={formik.values.contacts.instagram ?? ""}
               onChange={formik.handleChange}
-              error={formik.touched.instagram && Boolean(formik.errors.instagram)}
-              helperText={formik.touched.instagram && formik.errors.instagram}
+              onBlur={formik.handleBlur}
+              error={getIn(formik.touched, "contacts.instagram") && Boolean(getIn(formik.errors, "contacts.instagram"))}
+              helperText={getIn(formik.touched, "contacts.instagram") && getIn(formik.errors, "contacts.instagram")}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -187,13 +269,14 @@ const EditProfile = () => {
             />
             <TextField
               id="twitter"
-              name="twitter"
+              name="contacts.twitter"
               label="twitter"
               placeholder="Enter your twitter"
-              value={formik.values.twitter}
+              value={formik.values.contacts.twitter ?? ""}
               onChange={formik.handleChange}
-              error={formik.touched.twitter && Boolean(formik.errors.twitter)}
-              helperText={formik.touched.twitter && formik.errors.twitter}
+              onBlur={formik.handleBlur}
+              error={getIn(formik.touched, "contacts.twitter") && Boolean(getIn(formik.errors, "contacts.twitter"))}
+              helperText={getIn(formik.touched, "contacts.twitter") && getIn(formik.errors, "contacts.twitter")}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -204,13 +287,14 @@ const EditProfile = () => {
             />
             <TextField
               id="website"
-              name="website"
+              name="contacts.website"
               label="website"
               placeholder="Enter your website"
-              value={formik.values.website}
+              value={formik.values.contacts.website ?? ""}
               onChange={formik.handleChange}
-              error={formik.touched.website && Boolean(formik.errors.website)}
-              helperText={formik.touched.website && formik.errors.website}
+              onBlur={formik.handleBlur}
+              error={getIn(formik.touched, "contacts.website") && Boolean(getIn(formik.errors, "contacts.website"))}
+              helperText={getIn(formik.touched, "contacts.website") && getIn(formik.errors, "contacts.website")}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -221,13 +305,14 @@ const EditProfile = () => {
             />
             <TextField
               id="youtube"
-              name="youtube"
+              name="contacts.youtube"
               label="youtube"
               placeholder="Enter your youtube"
-              value={formik.values.youtube}
+              value={formik.values.contacts.youtube ?? ""}
               onChange={formik.handleChange}
-              error={formik.touched.youtube && Boolean(formik.errors.youtube)}
-              helperText={formik.touched.youtube && formik.errors.youtube}
+              onBlur={formik.handleBlur}
+              error={getIn(formik.touched, "contacts.youtube") && Boolean(getIn(formik.errors, "contacts.youtube"))}
+              helperText={getIn(formik.touched, "contacts.youtube") && getIn(formik.errors, "contacts.youtube")}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -238,13 +323,14 @@ const EditProfile = () => {
             />
             <TextField
               id="mainLink"
-              name="mainLink"
+              name="contacts.mainLink"
               label="mainLink"
               placeholder="Enter your mainLink"
-              value={formik.values.mainLink}
+              value={formik.values.contacts.mainLink ?? ""}
               onChange={formik.handleChange}
-              error={formik.touched.mainLink && Boolean(formik.errors.mainLink)}
-              helperText={formik.touched.mainLink && formik.errors.mainLink}
+              onBlur={formik.handleBlur}
+              error={getIn(formik.touched, "contacts.mainLink") && Boolean(getIn(formik.errors, "contacts.mainLink"))}
+              helperText={getIn(formik.touched, "contacts.mainLink") && getIn(formik.errors, "contacts.mainLink")}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -259,7 +345,7 @@ const EditProfile = () => {
           <Button sx={{ maxWidth: "150px" }} variant="contained" type="submit" disabled={formik.isSubmitting}>
             Save
           </Button>
-          {formik.status && <div className={s.error}>{formik.status}</div>}
+          {/* {formik.status && <div className={s.error}>{formik.status}</div>} */}
         </Box>
       </FormControl>
     </div>
