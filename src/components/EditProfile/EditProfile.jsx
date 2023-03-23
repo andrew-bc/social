@@ -1,6 +1,7 @@
 // TODO -switch not work
 
 import s from "./EditProfile.module.css";
+import withAuthRedirect from "./../../hoc/AuthRedirect";
 import { useFormik, getIn } from "formik";
 import * as Yup from "yup";
 import {
@@ -12,7 +13,6 @@ import {
   InputAdornment,
   Switch,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import vkicon from "./../../img/social/vk.png";
@@ -23,10 +23,13 @@ import twittericon from "./../../img/social/twitter.png";
 import websiteicon from "./../../img/social/website.png";
 import youtubeicon from "./../../img/social/youtube.png";
 import mainLinkicon from "./../../img/social/mainLink.png";
-import fakeAvatar from "./../../img/avatar.jpg";
+import noAvatar from "./../../img/noAvatar.svg";
 import { useEffect, useRef, useState } from "react";
 import { profileAPI } from "../../api/api";
 import { useSelector } from "react-redux";
+import { setAvatarURL as setAvatarURLDispatch } from "./../../redux/authReducer";
+import { useDispatch } from "react-redux";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 
 const EditProfile = () => {
   const URL =
@@ -34,6 +37,7 @@ const EditProfile = () => {
 
   const [confirmMessage, setConfirmMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [avatarURL, setAvatarURL] = useState(null);
 
   const alertRef = useRef(null);
 
@@ -79,10 +83,8 @@ const EditProfile = () => {
         .setProfileInfo(values)
         .then((data) => {
           if (data.resultCode === 0) {
-            //onSubmitProps.setStatus("Changes saved.Your profile has been successfully updated.");
             setConfirmMessage(true);
           } else {
-            //onSubmitProps.setStatus(data.messages);
             setErrorMessage(data.messages);
           }
           alertRef.current.scrollIntoView();
@@ -96,15 +98,43 @@ const EditProfile = () => {
   });
 
   const myId = useSelector((state) => state.auth.id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     profileAPI
       .getProfileByUserId(myId)
       .then((data) => {
         formik.setValues(data);
+        setAvatarURL(data.photos.large);
       })
       .catch((e) => setErrorMessage(e.messages));
   }, [myId]);
+
+  const hiddenFileInput = useRef(null);
+
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
+  };
+  const handleChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    setConfirmMessage(false);
+    setErrorMessage(null);
+    profileAPI
+      .setAvatar(fileUploaded)
+      .then((data) => {
+        if (data.resultCode === 0) {
+          setConfirmMessage(true);
+          setAvatarURL(data.data.photos.large);
+          dispatch(setAvatarURLDispatch(data.data.photos.small));
+        } else {
+          setErrorMessage(data.messages);
+        }
+        alertRef.current.scrollIntoView();
+      })
+      .catch((e) => {
+        setErrorMessage(e.messages);
+      });
+  };
 
   return (
     <div className={s.content}>
@@ -115,11 +145,9 @@ const EditProfile = () => {
         sx={{
           "& .MuiTextField-root": {
             m: 1,
-            // width: "40ch"
           },
           "& .MuiFormControl-root": {
             flex: "0 1 45%",
-            // width: "40ch"
           },
         }}
       >
@@ -168,7 +196,15 @@ const EditProfile = () => {
             <FormControlLabel
               sx={{ marginLeft: 0 }}
               control={
-                <Switch defaultChecked={formik.values.lookingForAJob} id="lookingForAJob" name="lookingForAJob" />
+                <Switch
+                  checked={formik.values.lookingForAJob}
+                  onChange={(value) => {
+                    console.log(value.target.checked);
+                    formik.setFieldValue("lookingForAJob", value.target.checked);
+                  }}
+                  id="lookingForAJob"
+                  name="lookingForAJob"
+                />
               }
               label="Looking for a job"
             />
@@ -187,9 +223,19 @@ const EditProfile = () => {
               helperText={formik.touched.lookingForAJobDescription && formik.errors.lookingForAJobDescription}
             />
           </Box>
-          <Box component="div" className={s.avatar}>
-            <img src={fakeAvatar} width="400px" alt="fakeAvater" />
-            <Typography>Upload photo</Typography>
+          <Box component="div" className={s.user__avatar}>
+            <Box component="div" onClick={handleClick} className={s.user__avatar__photo}>
+              <img
+                className={s.user__avatar__photo__url}
+                src={avatarURL ? avatarURL : noAvatar}
+                alt="Profile"
+                width="100%"
+              />
+              <Box component="div" className={s.user__avatar__photo__upload}>
+                <PhotoCameraIcon sx={{ fontSize: 90 }} />
+              </Box>
+            </Box>
+            <input type="file" style={{ display: "none" }} ref={hiddenFileInput} onChange={handleChange} />
           </Box>
         </Box>
         <Box component="div" className={s.bottom}>
@@ -345,11 +391,10 @@ const EditProfile = () => {
           <Button sx={{ maxWidth: "150px" }} variant="contained" type="submit" disabled={formik.isSubmitting}>
             Save
           </Button>
-          {/* {formik.status && <div className={s.error}>{formik.status}</div>} */}
         </Box>
       </FormControl>
     </div>
   );
 };
 
-export default EditProfile;
+export default withAuthRedirect(EditProfile);

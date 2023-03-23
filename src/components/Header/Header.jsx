@@ -5,6 +5,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
 import { Avatar, Container, Divider, ListItemIcon, Menu, MenuItem, Tooltip } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { Link as MaterialLink } from "@mui/material";
@@ -116,8 +117,21 @@ const Header = (props) => {
                       handleClose();
                     }}
                   >
-                    <Avatar />
+                    <ListItemIcon>
+                      <Avatar fontSize="small" />
+                    </ListItemIcon>
                     My Profile
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/edit");
+                      handleClose();
+                    }}
+                  >
+                    <ListItemIcon>
+                      <EditIcon fontSize="small" />
+                    </ListItemIcon>
+                    Edit profile
                   </MenuItem>
                   <Divider />
                   <MenuItem
