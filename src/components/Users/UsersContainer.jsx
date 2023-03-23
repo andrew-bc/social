@@ -9,6 +9,7 @@ import {
   setIsFollowinfInProgress,
   getUsers,
   getTotalCount,
+  setPageSize,
 } from "./../../redux/usersReducer";
 
 import s from "./UsersContainer.module.css";
@@ -27,10 +28,9 @@ const UsersContainer = (props) => {
   }, [props.totalCount, props.pageSize, pageFromParams, props.currentPage]);
 
   const onChangedPageNumber = (pageNumber) => {
-    let newPageNumber = pageNumber.selected + 1;
-    props.setCurrentPage(newPageNumber);
-    props.getUsers(props.pageSize, newPageNumber);
-    navigate(`/users/${newPageNumber}`);
+    props.setCurrentPage(pageNumber);
+    props.getUsers(props.pageSize, pageNumber);
+    navigate(`/users/${pageNumber}`);
   };
 
   return (
@@ -49,6 +49,7 @@ const UsersContainer = (props) => {
           setIsFollowinfInProgress={props.setIsFollowinfInProgress}
           followingInprogress={props.followingInprogress}
           isAuth={props.isAuth}
+          setPageSize={props.setPageSize}
         />
       )}
     </div>
@@ -75,5 +76,6 @@ export default compose(
     setIsFollowinfInProgress,
     getUsers,
     getTotalCount,
+    setPageSize,
   })
 )(UsersContainer);

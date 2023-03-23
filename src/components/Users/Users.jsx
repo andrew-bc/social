@@ -1,11 +1,12 @@
 import React from "react";
-import ReactPaginate from "react-paginate";
 import UserItem from "./UserItem/UserItem";
 import { useSelector } from "react-redux";
 import { Error } from "./../Error/Error";
 import { useEffect } from "react";
 
 import s from "./Users.module.css";
+import { Pagination, Stack, TablePagination } from "@mui/material";
+import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 const Users = (props) => {
   const isError = useSelector((state) => state.error.isError);
@@ -14,7 +15,7 @@ const Users = (props) => {
     if (isError) {
       <Error errorText={errorText} />;
     }
-  }, [isError, errorText]);
+  }, [isError, errorText, props.currentPage]);
 
   const getUsersElements = () => {
     return props.users.map((user) => (
@@ -30,30 +31,20 @@ const Users = (props) => {
     ));
   };
 
+  const handleChange = (event, value) => {
+    props.onChangedPageNumber(value);
+  };
+
   const getPaginationElements = () => {
     return (
       <div>
-        <ReactPaginate
-          nextLabel="next >"
-          onPageChange={props.onChangedPageNumber}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          pageCount={Math.ceil(props.totalCount / props.pageSize)}
-          previousLabel="< previous"
-          pageClassName={s.page__item}
-          pageLinkClassName={s.page__link}
-          previousClassName={s.page__item}
-          previousLinkClassName={s.page__link}
-          nextClassName={s.page__item}
-          nextLinkClassName={s.page__link}
-          breakLabel="..."
-          breakClassName={s.page__item}
-          breakLinkClassName={s.page__link}
-          containerClassName={s.pagination}
-          activeClassName={s.currentPage}
-          renderOnZeroPageCount={null}
-          forcePage={props.currentPage - 1}
-        />
+        <Stack spacing={2}>
+          <Pagination
+            count={Math.ceil(props.totalCount / props.pageSize)}
+            page={+props.currentPage}
+            onChange={handleChange}
+          />
+        </Stack>
       </div>
     );
   };

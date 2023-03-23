@@ -6,7 +6,7 @@ const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_COUNT = "SET_TOTAL_COUNT";
-const GET_TOTAL_COUNT = "GET_TOTAL_COUNT";
+const SET_PAGE_SIZE = "SET_PAGE_SIZE";
 const SET_IS_FETCHING = "SET_IS_FETCHING";
 const SET_IS_FOLLOWING_IN_PROGRESS = "SET_IS_FOLLOWING_IN_PROGRESS";
 
@@ -50,6 +50,9 @@ let usersReducer = (state = initialState, action) => {
     case SET_CURRENT_PAGE: {
       return { ...state, currentPage: action.currentPage };
     }
+    case SET_PAGE_SIZE: {
+      return { ...state, pageSize: action.pageSize };
+    }
     case SET_TOTAL_COUNT: {
       return { ...state, totalCount: action.totalCount };
     }
@@ -75,6 +78,7 @@ export const setUsers = (users) => ({ type: SET_USERS, users });
 export const followSuccess = (userId) => ({ type: FOLLOW, userId });
 export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId });
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage });
+export const setPageSize = (pageSize) => ({ type: SET_PAGE_SIZE, pageSize });
 export const setTotalCount = (totalCount) => ({ type: SET_TOTAL_COUNT, totalCount });
 export const setIsFetching = (isFetching) => ({ type: SET_IS_FETCHING, isFetching });
 export const setIsFollowinfInProgress = (userId, isFetching) => ({

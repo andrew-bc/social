@@ -72,10 +72,12 @@ const ProfileInfo = (props) => {
             </div>
             <div className={s.bio__socialLinks}>{socialLinksElements(props.profile.contacts)}</div>
             {props.profile.aboutMe ? <div className={s.bio__aboutMe}>About me: {props.profile.aboutMe}</div> : ""}
-            <div className={s.bio__lookingForAJob}>{props.profile.lookingForAJob ? "Yes" : "No"}</div>
+            <div className={s.bio__lookingForAJob}>
+              Looking for a job: {props.profile.lookingForAJob ? "Yes" : "No"}
+            </div>
             {props.profile.lookingForAJobDescription ? (
               <div className={s.bio__lookingForAJobDescription}>
-                lookingForAJobDescription: {props.profile.lookingForAJobDescription}
+                My skills: {props.profile.lookingForAJobDescription}
               </div>
             ) : (
               ""
