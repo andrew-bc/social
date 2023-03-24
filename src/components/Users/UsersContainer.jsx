@@ -8,8 +8,8 @@ import {
   setCurrentPage,
   setIsFollowinfInProgress,
   getUsers,
-  getTotalCount,
   setPageSize,
+  setTerm,
 } from "./../../redux/usersReducer";
 
 import s from "./UsersContainer.module.css";
@@ -24,12 +24,24 @@ const UsersContainer = (props) => {
     if (pageFromParams && pageFromParams >= 1 && pageFromParams <= Math.ceil(props.totalCount / props.pageSize)) {
       props.setCurrentPage(pageFromParams);
     }
-    props.getUsers(props.pageSize, props.currentPage);
-  }, [props.totalCount, props.pageSize, pageFromParams, props.currentPage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.totalCount, props.pageSize, pageFromParams]);
+
+  useEffect(() => {
+    props.getUsers(props.pageSize, props.currentPage, props.term);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.term]);
+
+  useEffect(() => {
+    return () => {
+      props.setTerm("");
+      props.setCurrentPage(1);
+    };
+  }, []);
 
   const onChangedPageNumber = (pageNumber) => {
     props.setCurrentPage(pageNumber);
-    props.getUsers(props.pageSize, pageNumber);
+    props.getUsers(props.pageSize, pageNumber, props.term);
     navigate(`/users/${pageNumber}`);
   };
 
@@ -50,6 +62,10 @@ const UsersContainer = (props) => {
           followingInprogress={props.followingInprogress}
           isAuth={props.isAuth}
           setPageSize={props.setPageSize}
+          getUsers={props.getUsers}
+          term={props.term}
+          setTerm={props.setTerm}
+          setCurrentPage={props.setCurrentPage}
         />
       )}
     </div>
@@ -62,6 +78,7 @@ const mapStateToProps = (state) => {
     totalCount: state.users.totalCount,
     currentPage: state.users.currentPage,
     pageSize: state.users.pageSize,
+    term: state.users.term,
     isFetching: state.users.isFetching,
     followingInprogress: state.users.followingInprogress,
     isAuth: state.auth.isAuth,
@@ -75,7 +92,7 @@ export default compose(
     setCurrentPage,
     setIsFollowinfInProgress,
     getUsers,
-    getTotalCount,
     setPageSize,
+    setTerm,
   })
 )(UsersContainer);

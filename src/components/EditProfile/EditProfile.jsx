@@ -1,5 +1,3 @@
-// TODO -switch not work
-
 import s from "./EditProfile.module.css";
 import withAuthRedirect from "./../../hoc/AuthRedirect";
 import { useFormik, getIn } from "formik";

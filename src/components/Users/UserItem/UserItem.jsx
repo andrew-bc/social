@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import s from "./UserItem.module.css";
 import noAvatarImage from "./../../../img/user_wall.png";
+import { Button } from "@mui/material";
 
 const UserItem = (props) => {
   return (
@@ -20,25 +21,31 @@ const UserItem = (props) => {
       {props.isAuth && (
         <div className={s.but}>
           {props.userInfo.followed ? (
-            <button
+            <Button
+              color="error"
+              variant="contained"
+              size="large"
+              sx={{ width: "120px" }}
               disabled={props.followingInprogress.includes(props.userInfo.id)}
-              className={s.info__unfollow}
               onClick={() => {
                 props.unfollow(props.userInfo.id);
               }}
             >
               Unfollow
-            </button>
+            </Button>
           ) : (
-            <button
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              sx={{ width: "120px" }}
               disabled={props.followingInprogress.includes(props.userInfo.id)}
-              className={s.info__follow}
               onClick={() => {
                 props.follow(props.userInfo.id);
               }}
             >
               Follow
-            </button>
+            </Button>
           )}
         </div>
       )}

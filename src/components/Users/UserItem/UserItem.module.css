@@ -51,7 +51,7 @@
   align-items: center;
   justify-content: center;
 }
-
+/* 
 .but button {
   width: 162px;
   color: #ffffff;
@@ -62,7 +62,8 @@
 
 .but button:disabled {
   background-color: grey;
-}
+} */
+
 .info__follow {
   background-color: #0cb658;
 }

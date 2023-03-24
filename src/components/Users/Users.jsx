@@ -5,8 +5,8 @@ import { Error } from "./../Error/Error";
 import { useEffect } from "react";
 
 import s from "./Users.module.css";
-import { Pagination, Stack, TablePagination } from "@mui/material";
-import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
+import PaginationElement from "./PaginationElement/PaginationElement.jsx";
+import SearchBar from "./SearchBar/SeacrhBar";
 
 const Users = (props) => {
   const isError = useSelector((state) => state.error.isError);
@@ -31,29 +31,41 @@ const Users = (props) => {
     ));
   };
 
-  const handleChange = (event, value) => {
-    props.onChangedPageNumber(value);
-  };
-
-  const getPaginationElements = () => {
-    return (
-      <div>
-        <Stack spacing={2}>
-          <Pagination
-            count={Math.ceil(props.totalCount / props.pageSize)}
-            page={+props.currentPage}
-            onChange={handleChange}
-          />
-        </Stack>
-      </div>
-    );
-  };
-
   return (
     <div className={s.content}>
-      <ul className={s.pagination}>{getPaginationElements()}</ul>
-      <div className={s.users}>{getUsersElements()}</div>
-      <ul className={s.pagination}>{getPaginationElements()}</ul>
+      <SearchBar
+        pageSize={props.pageSize}
+        currentPage={props.currentPage}
+        getUsers={props.getUsers}
+        setTerm={props.setTerm}
+        setCurrentPage={props.setCurrentPage}
+        term={props.term}
+      />
+
+      {props.totalCount > 0 ? (
+        <>
+          <ul className={s.pagination}>
+            <PaginationElement
+              onChangedPageNumber={props.onChangedPageNumber}
+              pageSize={props.pageSize}
+              currentPage={props.currentPage}
+              totalCount={props.totalCount}
+            />
+          </ul>
+          <div className={s.users}>{getUsersElements()}</div>
+          <ul className={s.pagination}>
+            <PaginationElement
+              onChangedPageNumber={props.onChangedPageNumber}
+              pageSize={props.pageSize}
+              currentPage={props.currentPage}
+              totalCount={props.totalCount}
+            />
+          </ul>
+        </>
+      ) : (
+        "Users not found"
+      )}
+
       {isError ? <Error errorText={errorText} /> : ""}
     </div>
   );

@@ -6,6 +6,7 @@ const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_COUNT = "SET_TOTAL_COUNT";
+const SET_TERM = "SET_TERM";
 const SET_PAGE_SIZE = "SET_PAGE_SIZE";
 const SET_IS_FETCHING = "SET_IS_FETCHING";
 const SET_IS_FOLLOWING_IN_PROGRESS = "SET_IS_FOLLOWING_IN_PROGRESS";
@@ -18,6 +19,7 @@ let initialState = {
   numberOfPage: 1,
   isFetching: false,
   followingInprogress: [],
+  term: "",
 };
 
 let usersReducer = (state = initialState, action) => {
@@ -59,6 +61,9 @@ let usersReducer = (state = initialState, action) => {
     case SET_IS_FETCHING: {
       return { ...state, isFetching: action.isFetching };
     }
+    case SET_TERM: {
+      return { ...state, term: action.term };
+    }
     case SET_IS_FOLLOWING_IN_PROGRESS: {
       return {
         ...state,
@@ -75,6 +80,7 @@ let usersReducer = (state = initialState, action) => {
 export default usersReducer;
 
 export const setUsers = (users) => ({ type: SET_USERS, users });
+export const setTerm = (term) => ({ type: SET_TERM, term });
 export const followSuccess = (userId) => ({ type: FOLLOW, userId });
 export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId });
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage });
@@ -100,11 +106,11 @@ export const getTotalCount = () => {
       });
   };
 };
-export const getUsers = (pageSize, currentPage) => {
+export const getUsers = (pageSize, currentPage, term, friend) => {
   return (dispatch) => {
     dispatch(setIsFetching(true));
     usersAPI
-      .getUsers(pageSize, currentPage)
+      .getUsers(pageSize, currentPage, term, friend)
       .then((data) => {
         dispatch(setIsFetching(false));
         dispatch(setUsers(data.items));

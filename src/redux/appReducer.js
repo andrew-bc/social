@@ -22,8 +22,8 @@ export const initializedSuccess = () => ({ type: INIT_APP });
 export const initApp = () => {
   return (dispatch) => {
     const a = dispatch(getAutharization());
-    const b = dispatch(getTotalCount());
-    Promise.all([a, b]).then((aa, bb) => {
+    //const b = dispatch(getTotalCount());
+    Promise.all([a]).then((aa) => {
       dispatch(initializedSuccess());
     });
   };

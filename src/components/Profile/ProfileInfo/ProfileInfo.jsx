@@ -1,15 +1,14 @@
 import s from "./ProfileInfo.module.css";
 import noAvatar from "./../../../img/noAvatar.svg";
 import Preload from "../../Preload/Preload";
-import normalizeUrl from "normalize-url";
 import UserStatus from "./UserStatus/UserStatus";
-import upload_photo from "./../../../img/upload_photo.png";
 import FileUploader from "./FileUploader/FileUploader";
 import { useSelector } from "react-redux";
 import { Error } from "../../Error/Error";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import SocialLinksElements from "./SocialLinksElements/SocialLinksElements";
 
 const ProfileInfo = (props) => {
   const isError = useSelector((state) => state.error.isError);
@@ -20,22 +19,6 @@ const ProfileInfo = (props) => {
       <Error errorText={errorText} />;
     }
   }, [isError, errorText]);
-
-  const socialLinksElements = (data) => {
-    let result = [];
-    for (let key in data) {
-      if (data[key]) {
-        result.push(
-          <div key={key} className={s.bio__socialLink}>
-            <a key={key} href={normalizeUrl(data[key])} target="_blank" rel="noreferrer">
-              <img key={key} title={key} alt={key} src={require(`./../../../img/social/${key}.png`)} width="25" />
-            </a>
-          </div>
-        );
-      }
-    }
-    return result;
-  };
 
   if (!props.profile) {
     return (
@@ -55,11 +38,6 @@ const ProfileInfo = (props) => {
           {props.myId === props.profile.userId ? <FileUploader uploadAvatar={props.uploadAvatar} /> : null}
         </div>
         <div className={s.user__info}>
-          {props.myId === props.profile.userId ? (
-            <Link to="/edit">
-              <Button>Edit profile</Button>
-            </Link>
-          ) : null}
           <div className={s.info__fullName}>{props.profile.fullName}</div>
           <div className={s.info__bio}>
             <div className={s.bio__status}>
@@ -70,19 +48,35 @@ const ProfileInfo = (props) => {
                 myId={props.myId}
               />
             </div>
-            <div className={s.bio__socialLinks}>{socialLinksElements(props.profile.contacts)}</div>
-            {props.profile.aboutMe ? <div className={s.bio__aboutMe}>About me: {props.profile.aboutMe}</div> : ""}
+            <div className={s.bio__socialLinks}>
+              <SocialLinksElements data={props.profile.contacts} />
+            </div>
+            {props.profile.aboutMe ? (
+              <div className={s.bio__aboutMe}>
+                <span className={s.bio__span}>About me: </span> {props.profile.aboutMe}
+              </div>
+            ) : (
+              ""
+            )}
             <div className={s.bio__lookingForAJob}>
-              Looking for a job: {props.profile.lookingForAJob ? "Yes" : "No"}
+              <span className={s.bio__span}>Looking for a job:</span> {props.profile.lookingForAJob ? "Yes" : "No"}
             </div>
             {props.profile.lookingForAJobDescription ? (
               <div className={s.bio__lookingForAJobDescription}>
-                My skills: {props.profile.lookingForAJobDescription}
+                <span className={s.bio__span}>My skills:</span> {props.profile.lookingForAJobDescription}
               </div>
             ) : (
               ""
             )}
           </div>
+        </div>
+        <div className={s.user__edit}>
+          {" "}
+          {props.myId === props.profile.userId ? (
+            <Link to="/edit">
+              <Button variant="contained">Edit profile</Button>
+            </Link>
+          ) : null}
         </div>
       </div>
     </div>
