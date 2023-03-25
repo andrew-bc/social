@@ -1,5 +1,4 @@
 import { getAutharization } from "./authReducer";
-import { getTotalCount } from "./usersReducer";
 
 const INIT_APP = "INIT_APP";
 

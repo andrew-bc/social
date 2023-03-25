@@ -16,10 +16,6 @@ const Header = (props) => {
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
