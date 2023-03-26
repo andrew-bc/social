@@ -17,6 +17,10 @@ export const usersAPI = {
     const response = await instance.get(`users?count=1&page=1`);
     return response.data.totalCount;
   },
+  async isFollow(id) {
+    const response = await instance.get(`follow/${id}`);
+    return response.data;
+  },
   async follow(id) {
     const response = await instance.post(`follow/${id}`);
     return response.data;

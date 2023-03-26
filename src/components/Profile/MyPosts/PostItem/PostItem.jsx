@@ -1,7 +1,7 @@
-import s from "./Post.module.css";
-import likeImage from "./../../img/like.png";
+import s from "./PostItem.module.css";
+import likeImage from "./../../../../img/like.png";
 
-const Post = (props) => {
+const PostItem = (props) => {
   return (
     <div>
       <div className={s.wall__item}>
@@ -20,4 +20,4 @@ const Post = (props) => {
   );
 };
 
-export default Post;
+export default PostItem;

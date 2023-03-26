@@ -1,6 +1,6 @@
 import React from "react";
 import s from "./MyPosts.module.css";
-import Post from "./Post/Post";
+import PostItem from "./PostItem/PostItem";
 
 class MyPosts extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class MyPosts extends React.Component {
     };
   }
   postsElements = this.props.posts.map((p) => (
-    <Post id={p.id} key={p.id} message={p.message} src={p.src} likesCount={p.likesCount} />
+    <PostItem id={p.id} key={p.id} message={p.message} src={p.src} likesCount={p.likesCount} />
   ));
 
   addPost = () => {
@@ -28,7 +28,7 @@ class MyPosts extends React.Component {
 
   componentDidUpdate() {
     this.postsElements = this.props.posts.map((p) => (
-      <Post id={p.id} key={p.id} message={p.message} src={p.src} likesCount={p.likesCount} />
+      <PostItem id={p.id} key={p.id} message={p.message} src={p.src} likesCount={p.likesCount} />
     ));
   }
 
@@ -49,7 +49,7 @@ class MyPosts extends React.Component {
         </div>
         <div className={s.content__wall}>
           {this.props.posts.map((p) => (
-            <Post id={p.id} key={p.id} message={p.message} src={p.src} likesCount={p.likesCount} />
+            <PostItem id={p.id} key={p.id} message={p.message} src={p.src} likesCount={p.likesCount} />
           ))}
         </div>
       </div>

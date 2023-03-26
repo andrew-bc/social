@@ -3,8 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import s from "./Profile.module.css";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { getProfile, setStatus, uploadAvatar } from "./../../redux/profileReducer";
+import {
+  getProfile,
+  setStatus,
+  uploadAvatar,
+  follow,
+  unfollow,
+  setIsFollowingInProgress,
+} from "./../../redux/profileReducer";
 import { compose } from "redux";
+
 const ProfileContainer = (props) => {
   let { userId } = useParams();
   let navigate = useNavigate();
@@ -32,7 +40,17 @@ const mapStateToProps = (state) => {
   return {
     profile: state.profilePage,
     auth: state.auth,
+    isAuth: state.auth.isAuth,
   };
 };
 
-export default compose(connect(mapStateToProps, { getProfile, setStatus, uploadAvatar }))(ProfileContainer);
+export default compose(
+  connect(mapStateToProps, {
+    getProfile,
+    setStatus,
+    uploadAvatar,
+    follow,
+    unfollow,
+    setIsFollowingInProgress,
+  })
+)(ProfileContainer);

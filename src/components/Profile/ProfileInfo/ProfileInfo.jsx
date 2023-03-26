@@ -1,14 +1,15 @@
 import s from "./ProfileInfo.module.css";
 import noAvatar from "./../../../img/noAvatar.svg";
-import Preload from "../../Preload/Preload";
+import Preload from "../../UI/Preload/Preload";
 import UserStatus from "./UserStatus/UserStatus";
-import FileUploader from "./FileUploader/FileUploader";
+import FileUploader from "../../UI/FileUploader/FileUploader";
 import { useSelector } from "react-redux";
 import { Error } from "../../Error/Error";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import SocialLinksElements from "./SocialLinksElements/SocialLinksElements";
+import SocialLinksElements from "../../UI/SocialLinksElements/SocialLinksElements";
+import FollowButton from "./../../UI/FollowButton/FollowButton";
 
 const ProfileInfo = (props) => {
   const isError = useSelector((state) => state.error.isError);
@@ -35,8 +36,20 @@ const ProfileInfo = (props) => {
           <div className={s.user__avatar__photo}>
             <img src={props.profile.photos.large ? props.profile.photos.large : noAvatar} alt="Profile" width="300" />
           </div>
-          {props.myId === props.profile.userId ? <FileUploader uploadAvatar={props.uploadAvatar} /> : null}
+          {props.myId === props.profile.userId && <FileUploader uploadAvatar={props.uploadAvatar} />}
+          {props.myId !== props.profile.userId && (
+            <div className={s.user__avatar__follow}>
+              <FollowButton
+                isFollowButton={!props.profile.isFollow}
+                id={props.profile.userId}
+                unfollow={props.unfollow}
+                follow={props.follow}
+                disabled={props.profile.isFollowingInProgress}
+              />
+            </div>
+          )}
         </div>
+
         <div className={s.user__info}>
           <div className={s.info__fullName}>{props.profile.fullName}</div>
           <div className={s.info__bio}>

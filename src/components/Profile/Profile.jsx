@@ -10,6 +10,9 @@ const Profile = (props) => {
         setStatus={props.setStatus}
         uploadAvatar={props.uploadAvatar}
         myId={props.auth.id}
+        isAuth={props.isAuth}
+        follow={props.follow}
+        unfollow={props.unfollow}
       />
       <MyPostsContainer />
     </div>

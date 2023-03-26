@@ -5,7 +5,7 @@ import { Error } from "./../Error/Error";
 import { useEffect } from "react";
 
 import s from "./Users.module.css";
-import PaginationElement from "./PaginationElement/PaginationElement.jsx";
+import PaginationElement from "../UI/PaginationElement/PaginationElement.jsx";
 import SearchBar from "./SearchBar/SeacrhBar";
 
 const Users = (props) => {
@@ -25,7 +25,7 @@ const Users = (props) => {
         follow={props.follow}
         unfollow={props.unfollow}
         followingInprogress={props.followingInprogress}
-        setIsFollowinfInProgress={props.setIsFollowinfInProgress}
+        setIsFollowingInProgress={props.setIsFollowingInProgress}
         isAuth={props.isAuth}
       ></UserItem>
     ));

@@ -10,6 +10,11 @@
 .user__avatar__photo {
 }
 
+.user__avatar__follow {
+  text-align: center;
+  margin: 20px;
+}
+
 .user__info {
   margin: 10px 0 0 0;
   flex: 1 1 auto;

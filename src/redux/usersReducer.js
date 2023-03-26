@@ -87,7 +87,7 @@ export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, curren
 export const setPageSize = (pageSize) => ({ type: SET_PAGE_SIZE, pageSize });
 export const setTotalCount = (totalCount) => ({ type: SET_TOTAL_COUNT, totalCount });
 export const setIsFetching = (isFetching) => ({ type: SET_IS_FETCHING, isFetching });
-export const setIsFollowinfInProgress = (userId, isFetching) => ({
+export const setIsFollowingInProgress = (userId, isFetching) => ({
   type: SET_IS_FOLLOWING_IN_PROGRESS,
   userId,
   isFetching,
@@ -124,7 +124,7 @@ export const getUsers = (pageSize, currentPage, term, friend) => {
 };
 export const follow = (userId) => {
   return (dispatch) => {
-    dispatch(setIsFollowinfInProgress(userId, true));
+    dispatch(setIsFollowingInProgress(userId, true));
     usersAPI
       .follow(userId)
       .then((data) => {
@@ -134,7 +134,7 @@ export const follow = (userId) => {
           dispatch(setIsError(true));
           dispatch(setErrorText(data.messages[0]));
         }
-        dispatch(setIsFollowinfInProgress(userId, false));
+        dispatch(setIsFollowingInProgress(userId, false));
       })
       .catch((e) => {
         dispatch(setIsError(true));
@@ -144,7 +144,7 @@ export const follow = (userId) => {
 };
 export const unfollow = (userId) => {
   return (dispatch) => {
-    dispatch(setIsFollowinfInProgress(userId, true));
+    dispatch(setIsFollowingInProgress(userId, true));
     usersAPI
       .unfollow(userId)
       .then((data) => {
@@ -154,7 +154,7 @@ export const unfollow = (userId) => {
           dispatch(setIsError(true));
           dispatch(setErrorText(data.messages[0]));
         }
-        dispatch(setIsFollowinfInProgress(userId, false));
+        dispatch(setIsFollowingInProgress(userId, false));
       })
       .catch((e) => {
         dispatch(setIsError(true));

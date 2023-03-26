@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Users from "./Users";
-import Preload from "../Preload/Preload";
+import Preload from "./../UI/Preload/Preload";
 import {
   follow,
   unfollow,
   setCurrentPage,
-  setIsFollowinfInProgress,
+  setIsFollowingInProgress,
   getUsers,
   setPageSize,
   setTerm,
@@ -90,7 +90,7 @@ export default compose(
     follow,
     unfollow,
     setCurrentPage,
-    setIsFollowinfInProgress,
+    setIsFollowingInProgress,
     getUsers,
     setPageSize,
     setTerm,

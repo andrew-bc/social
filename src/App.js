@@ -12,7 +12,7 @@ import LoginContainer from "./components/Login/LoginContainer";
 import { connect } from "react-redux";
 import { initApp } from "./redux/appReducer";
 import { useEffect } from "react";
-import Preload from "./components/Preload/Preload";
+import Preload from "./components/UI/Preload/Preload";
 import { compose } from "redux";
 
 function withRouter(Component) {

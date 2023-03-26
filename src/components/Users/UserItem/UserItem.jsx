@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import s from "./UserItem.module.css";
 import noAvatarImage from "./../../../img/user_wall.png";
 import { Button } from "@mui/material";
+import FollowButton from "../../UI/FollowButton/FollowButton";
 
 const UserItem = (props) => {
   return (
@@ -21,31 +22,45 @@ const UserItem = (props) => {
       {props.isAuth && (
         <div className={s.but}>
           {props.userInfo.followed ? (
-            <Button
-              color="error"
-              variant="contained"
-              size="large"
-              sx={{ width: "120px" }}
+            // <Button
+            //   color="error"
+            //   variant="contained"
+            //   size="large"
+            //   sx={{ width: "120px" }}
+            //   disabled={props.followingInprogress.includes(props.userInfo.id)}
+            //   onClick={() => {
+            //     props.unfollow(props.userInfo.id);
+            //   }}
+            // >
+            //   Unfollow
+            // </Button>
+            <FollowButton
+              isFollowButton={false}
+              id={props.userInfo.id}
+              unfollow={props.unfollow}
+              follow={props.follow}
               disabled={props.followingInprogress.includes(props.userInfo.id)}
-              onClick={() => {
-                props.unfollow(props.userInfo.id);
-              }}
-            >
-              Unfollow
-            </Button>
+            />
           ) : (
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              sx={{ width: "120px" }}
-              disabled={props.followingInprogress.includes(props.userInfo.id)}
-              onClick={() => {
-                props.follow(props.userInfo.id);
-              }}
-            >
-              Follow
-            </Button>
+            // <Button
+            //   variant="contained"
+            //   color="primary"
+            //   size="large"
+            //   sx={{ width: "120px" }}
+            //   disabled={props.followingInprogress.includes(props.userInfo.id)}
+            //   onClick={() => {
+            //     props.follow(props.userInfo.id);
+            //   }}
+            // >
+            //   Follow
+            // </Button>
+            <FollowButton
+              isFollowButton={true}
+              id={props.userInfo.id}
+              unfollow={props.unfollow}
+              follow={props.follow}
+              followingInprogress={props.followingInprogress}
+            />
           )}
         </div>
       )}
