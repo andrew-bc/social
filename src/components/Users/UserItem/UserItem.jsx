@@ -21,47 +21,13 @@ const UserItem = (props) => {
       </div>
       {props.isAuth && (
         <div className={s.but}>
-          {props.userInfo.followed ? (
-            // <Button
-            //   color="error"
-            //   variant="contained"
-            //   size="large"
-            //   sx={{ width: "120px" }}
-            //   disabled={props.followingInprogress.includes(props.userInfo.id)}
-            //   onClick={() => {
-            //     props.unfollow(props.userInfo.id);
-            //   }}
-            // >
-            //   Unfollow
-            // </Button>
-            <FollowButton
-              isFollowButton={false}
-              id={props.userInfo.id}
-              unfollow={props.unfollow}
-              follow={props.follow}
-              disabled={props.followingInprogress.includes(props.userInfo.id)}
-            />
-          ) : (
-            // <Button
-            //   variant="contained"
-            //   color="primary"
-            //   size="large"
-            //   sx={{ width: "120px" }}
-            //   disabled={props.followingInprogress.includes(props.userInfo.id)}
-            //   onClick={() => {
-            //     props.follow(props.userInfo.id);
-            //   }}
-            // >
-            //   Follow
-            // </Button>
-            <FollowButton
-              isFollowButton={true}
-              id={props.userInfo.id}
-              unfollow={props.unfollow}
-              follow={props.follow}
-              followingInprogress={props.followingInprogress}
-            />
-          )}
+          <FollowButton
+            isFollowButton={!props.userInfo.followed}
+            id={props.userInfo.id}
+            unfollow={props.unfollow}
+            follow={props.follow}
+            disabled={props.followingInprogress.includes(props.userInfo.id)}
+          />
         </div>
       )}
     </div>

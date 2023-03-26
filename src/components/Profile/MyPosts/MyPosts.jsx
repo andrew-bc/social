@@ -14,7 +14,7 @@ class MyPosts extends React.Component {
   ));
 
   addPost = () => {
-    if (this.state.activePostText.trim().length != 0) {
+    if (this.state.activePostText.trim().length !== 0) {
       this.props.addPost(this.state.activePostText);
       this.setState({ activePostText: "" });
     }

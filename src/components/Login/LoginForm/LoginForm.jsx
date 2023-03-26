@@ -42,7 +42,7 @@ const LoginForm = (props) => {
           onBlur={formik.handleBlur}
           value={formik.values.email}
         />
-        {formik.touched.email && formik.errors.email ? <div className={s.error}>{formik.errors.email}</div> : null}
+        {formik.touched.email && formik.errors.email && <div className={s.error}>{formik.errors.email}</div>}
 
         <label htmlFor="password"></label>
         <input
@@ -54,11 +54,9 @@ const LoginForm = (props) => {
           onBlur={formik.handleBlur}
           value={formik.values.password}
         />
-        {formik.touched.password && formik.errors.password ? (
-          <div className={s.error}>{formik.errors.password}</div>
-        ) : null}
+        {formik.touched.password && formik.errors.password && <div className={s.error}>{formik.errors.password}</div>}
 
-        {props.captchaURL ? (
+        {props.captchaURL && (
           <div>
             <img src={props.captchaURL} alt="captcha" />
             <label htmlFor="captcha"></label>
@@ -71,12 +69,8 @@ const LoginForm = (props) => {
               onBlur={formik.handleBlur}
               value={formik.values.captcha}
             />
-            {formik.touched.captcha && formik.errors.captcha ? (
-              <div className={s.error}>{formik.errors.captcha}</div>
-            ) : null}
+            {formik.touched.captcha && formik.errors.captcha && <div className={s.error}>{formik.errors.captcha}</div>}
           </div>
-        ) : (
-          ""
         )}
 
         <label>

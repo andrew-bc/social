@@ -24,14 +24,14 @@ const ProfileInfo = (props) => {
   if (!props.profile) {
     return (
       <>
-        <Preload /> {isError ? <Error errorText={errorText} /> : ""}
+        <Preload /> {isError && <Error errorText={errorText} />}
       </>
     );
   }
   return (
     <div className={s.content}>
       <div className={s.content__user}>
-        {isError ? <Error errorText={errorText} /> : ""}
+        {isError && <Error errorText={errorText} />}
         <div className={s.user__avatar}>
           <div className={s.user__avatar__photo}>
             <img src={props.profile.photos.large ? props.profile.photos.large : noAvatar} alt="Profile" width="300" />
@@ -64,32 +64,27 @@ const ProfileInfo = (props) => {
             <div className={s.bio__socialLinks}>
               <SocialLinksElements data={props.profile.contacts} />
             </div>
-            {props.profile.aboutMe ? (
+            {props.profile.aboutMe && (
               <div className={s.bio__aboutMe}>
                 <span className={s.bio__span}>About me: </span> {props.profile.aboutMe}
               </div>
-            ) : (
-              ""
             )}
             <div className={s.bio__lookingForAJob}>
               <span className={s.bio__span}>Looking for a job:</span> {props.profile.lookingForAJob ? "Yes" : "No"}
             </div>
-            {props.profile.lookingForAJobDescription ? (
+            {props.profile.lookingForAJobDescription && (
               <div className={s.bio__lookingForAJobDescription}>
                 <span className={s.bio__span}>My skills:</span> {props.profile.lookingForAJobDescription}
               </div>
-            ) : (
-              ""
             )}
           </div>
         </div>
         <div className={s.user__edit}>
-          {" "}
-          {props.myId === props.profile.userId ? (
+          {props.myId === props.profile.userId && (
             <Link to="/edit">
               <Button variant="contained">Edit profile</Button>
             </Link>
-          ) : null}
+          )}
         </div>
       </div>
     </div>
